@@ -1,0 +1,8 @@
+export { default as HomePage } from "./HomePage";
+export { default as ProjectsPage } from "./ProjectsPage";
+export { default as GamesPage } from "./GamesPage";
+export { default as WebPage } from "./WebPage";
+export { default as AboutPage } from "./AboutPage";
+export { default as ContactPage } from "./ContactPage";
+export { default as ResumePage } from "./ResumePage";
+export { default as NotFoundPage } from "./NotFoundPage";
