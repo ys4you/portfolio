@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { NAV_LINKS, SITE_NAME } from "@/constants/navigation";
+import ThemeToggle from "@/components/ThemeToggle";
 import type { NavLink } from "@/types";
 
 export default function Navbar() {
@@ -25,20 +26,26 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden items-center gap-1 md:flex">
-          {NAV_LINKS.map((link) => (
-            <NavItem key={link.href} link={link} currentPath={location.pathname} />
-          ))}
-        </ul>
+        <div className="hidden items-center gap-2 md:flex">
+          <ul className="flex items-center gap-1">
+            {NAV_LINKS.map((link) => (
+              <NavItem key={link.href} link={link} currentPath={location.pathname} />
+            ))}
+          </ul>
+          <ThemeToggle />
+        </div>
 
         {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen((prev) => !prev)}
-          className="grid h-10 w-10 place-items-center rounded-sm text-text-secondary transition-colors hover:text-text md:hidden"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen((prev) => !prev)}
+            className="grid h-10 w-10 place-items-center rounded-sm text-text-secondary transition-colors hover:text-text"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile drawer */}
@@ -63,20 +70,16 @@ function NavItem({ link, currentPath }: { link: NavLink; currentPath: string }) 
   const isActive =
     currentPath === link.href || link.children?.some((c) => currentPath === c.href);
 
-  // Close dropdown on outside click
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
   if (link.children) {
     return (
-      <li ref={ref} className="relative">
-        <button
-          onClick={() => setOpen((v) => !v)}
+      <li
+        ref={ref}
+        className="relative"
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
+        <Link
+          to={link.href}
           className={`flex items-center gap-1 rounded-sm px-3 py-2 text-sm font-medium transition-colors ${
             isActive ? "text-accent" : "text-text-secondary hover:text-text"
           }`}
@@ -86,7 +89,7 @@ function NavItem({ link, currentPath }: { link: NavLink; currentPath: string }) 
             size={14}
             className={`transition-transform ${open ? "rotate-180" : ""}`}
           />
-        </button>
+        </Link>
 
         {open && (
           <ul className="absolute top-full left-0 mt-1 min-w-[160px] rounded-radius-card border border-border bg-bg-elevated p-1 shadow-xl">

@@ -10,6 +10,7 @@ import {
   ResumePage,
   NotFoundPage,
 } from "@/pages";
+import ProjectDetailPage from "@/pages/ProjectDetailPage";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
       { path: "projects", element: <ProjectsPage /> },
       { path: "projects/games", element: <GamesPage /> },
       { path: "projects/web", element: <WebPage /> },
+      { path: "projects/:slug", element: <ProjectDetailPage /> },
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },
       { path: "resume", element: <ResumePage /> },

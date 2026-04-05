@@ -19,6 +19,33 @@ export default function HeroBackground() {
     let width = 0;
     let height = 0;
 
+    // Read theme colors from CSS variables
+    let accentRGB = "45, 212, 191";
+    let bgRGB = "10, 10, 11";
+
+    function readThemeColors() {
+      const style = getComputedStyle(document.documentElement);
+      bgRGB = style.getPropertyValue("--color-canvas-bg").trim() || bgRGB;
+      // Parse accent hex to RGB
+      const accent = style.getPropertyValue("--color-accent").trim();
+      if (accent && accent.startsWith("#")) {
+        const hex = accent.replace("#", "");
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        accentRGB = `${r}, ${g}, ${b}`;
+      }
+    }
+
+    readThemeColors();
+
+    // Re-read on theme change
+    const observer = new MutationObserver(() => readThemeColors());
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     // ── Game of Life state (left side) ──
     const cellSize = 18;
     let cols = 0;
@@ -158,7 +185,7 @@ export default function HeroBackground() {
           const px = x * cellSize;
           const distFromCenter = 1 - px / halfW;
           const alpha = 0.04 + distFromCenter * 0.08;
-          ctx.fillStyle = `rgba(45, 212, 191, ${alpha})`;
+          ctx.fillStyle = `rgba(${accentRGB}, ${alpha})`;
           ctx.fillRect(px + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
         }
       }
@@ -193,7 +220,7 @@ export default function HeroBackground() {
 
           if (dist < CONNECTION_DIST) {
             const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
-            ctx.strokeStyle = `rgba(45, 212, 191, ${alpha})`;
+            ctx.strokeStyle = `rgba(${accentRGB}, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -219,13 +246,13 @@ export default function HeroBackground() {
         // Glowing packet dot
         ctx.beginPath();
         ctx.arc(px, py, 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(45, 212, 191, 0.9)`;
+        ctx.fillStyle = `rgba(${accentRGB}, 0.9)`;
         ctx.fill();
 
         // Glow
         ctx.beginPath();
         ctx.arc(px, py, 8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(45, 212, 191, 0.15)`;
+        ctx.fillStyle = `rgba(${accentRGB}, 0.15)`;
         ctx.fill();
 
         return true;
@@ -241,20 +268,20 @@ export default function HeroBackground() {
         const nodeAlpha = (0.2 + pulse * 0.15) * fadeAlpha;
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius + pulse * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(45, 212, 191, ${nodeAlpha})`;
+        ctx.fillStyle = `rgba(${accentRGB}, ${nodeAlpha})`;
         ctx.fill();
 
         // Outer ring
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius + 6 + pulse * 3, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(45, 212, 191, ${0.05 * fadeAlpha})`;
+        ctx.strokeStyle = `rgba(${accentRGB}, ${0.05 * fadeAlpha})`;
         ctx.lineWidth = 1;
         ctx.stroke();
 
         // Label
         const labelAlpha = (0.1 + pulse * 0.08) * fadeAlpha;
         ctx.font = '500 9px "JetBrains Mono", monospace';
-        ctx.fillStyle = `rgba(45, 212, 191, ${labelAlpha})`;
+        ctx.fillStyle = `rgba(${accentRGB}, ${labelAlpha})`;
         ctx.textAlign = "center";
         ctx.fillText(node.label, node.x, node.y - node.radius - 8);
       }
@@ -263,10 +290,10 @@ export default function HeroBackground() {
 
       // ── Center fade ──
       const grad = ctx.createLinearGradient(halfW - 120, 0, halfW + 120, 0);
-      grad.addColorStop(0, "rgba(10, 10, 11, 0)");
-      grad.addColorStop(0.35, "rgba(10, 10, 11, 1)");
-      grad.addColorStop(0.65, "rgba(10, 10, 11, 1)");
-      grad.addColorStop(1, "rgba(10, 10, 11, 0)");
+      grad.addColorStop(0, `rgba(${bgRGB}, 0)`);
+      grad.addColorStop(0.35, `rgba(${bgRGB}, 1)`);
+      grad.addColorStop(0.65, `rgba(${bgRGB}, 1)`);
+      grad.addColorStop(1, `rgba(${bgRGB}, 0)`);
       ctx.fillStyle = grad;
       ctx.fillRect(halfW - 120, 0, 240, height);
 
@@ -279,6 +306,7 @@ export default function HeroBackground() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
+      observer.disconnect();
     };
   }, []);
 

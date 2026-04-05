@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Gamepad2, Globe } from "lucide-react";
 import HeroBackground from "@/components/HeroBackground";
 import Typewriter from "@/components/Typewriter";
-import { IMG } from "@/data/projects";
+import BentoGrid from "@/components/BentoGrid";
+import { IMG, FEATURED_PROJECTS } from "@/data/projects";
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -121,6 +122,81 @@ export default function HomePage() {
               description="Full-stack applications, internal tooling, and automation workflows built with modern frameworks."
             />
           </div>
+        </div>
+      </section>
+
+      {/* ── Featured Projects ── */}
+      <section className="section-gap border-t border-border-subtle">
+        <div className="page-container">
+          <div className="mb-10 flex items-end justify-between">
+            <motion.h2
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-3xl font-bold md:text-4xl"
+            >
+              Featured projects<span className="text-accent">.</span>
+            </motion.h2>
+            <Link
+              to="/projects"
+              className="hidden items-center gap-1 text-sm font-medium text-text-secondary transition-colors hover:text-accent sm:inline-flex"
+            >
+              View all <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <BentoGrid projects={FEATURED_PROJECTS.slice(0, 6)} />
+
+          <Link
+            to="/projects"
+            className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-text-secondary transition-colors hover:text-accent sm:hidden"
+          >
+            View all projects <ArrowRight size={14} />
+          </Link>
+        </div>
+      </section>
+
+      {/* ── About Me (short) ── */}
+      <section className="section-gap border-t border-border-subtle">
+        <div className="page-container">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
+            className="grid items-center gap-10 md:grid-cols-5"
+          >
+            <div className="aspect-[4/5] overflow-hidden rounded-radius-card border border-border-subtle bg-surface md:col-span-2">
+              <img
+                src={IMG.profile}
+                alt="Yesse Seijnaeve"
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <div className="md:col-span-3">
+              <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+                A bit about me<span className="text-accent">.</span>
+              </h2>
+              <p className="mb-4 text-text-secondary leading-relaxed">
+                I'm Yesse — a game development student at BUas in Breda, specializing in
+                C++ and graphics programming. I build ray tracers and voxel engines from
+                scratch, and ship full-stack web tools that streamline real business
+                workflows at JG Webmarketing.
+              </p>
+              <p className="mb-6 text-text-secondary leading-relaxed">
+                I thrive at the intersection of low-level performance and polished user
+                experience. Whether it's optimizing a SIMD render loop or designing a
+                React dashboard, I care about making things that work well and feel right.
+              </p>
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+              >
+                More about me <ArrowRight size={14} />
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
     </>

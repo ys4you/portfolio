@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, MapPin } from "lucide-react";
-import { GitHubIcon, LinkedInIcon } from "@/components/icons/BrandIcons";
+import { Send, FileText } from "lucide-react";
+import { GitHubIcon, LinkedInIcon, ItchIcon } from "@/components/icons/BrandIcons";
 import PageHeader from "@/components/PageHeader";
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -16,27 +16,98 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
+// ─── CONFIGURATION ───────────────────────────────────
+const WEB3FORMS_KEY = "";
+
+// ─────────────────────────────────────────────────────
+
+// Email is split to prevent scraping from built JS
+function getEmail() {
+  const parts = ["yesse", "seijn", "gmail", "com"];
+  return `${parts[0]}.${parts[1]}@${parts[2]}.${parts[3]}`;
+}
+
 const INFO_ITEMS = [
-  { icon: <Mail size={18} />, label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
-  { icon: <MapPin size={18} />, label: "Location", value: "Breda, Netherlands" },
-  { icon: <GitHubIcon size={18} />, label: "GitHub", value: "github.com/yesse", href: "https://github.com/" },
-  { icon: <LinkedInIcon size={18} />, label: "LinkedIn", value: "linkedin.com/in/yesse", href: "https://linkedin.com/" },
+  {
+    icon: <GitHubIcon size={18} />,
+    label: "GitHub",
+    value: "ys4you",
+    href: "https://github.com/ys4you/",
+  },
+  {
+    icon: <LinkedInIcon size={18} />,
+    label: "LinkedIn",
+    value: "Yesse Seijnaeve",
+    href: "https://www.linkedin.com/in/yesse-seijnaeve/",
+  },
+  {
+    icon: <ItchIcon size={18} />,
+    label: "itch.io",
+    value: "ysproductions",
+    href: "https://ysproductions.itch.io/",
+  },
+  {
+    icon: <FileText size={18} />,
+    label: "Email & Location",
+    value: "Available on my resume",
+    href: "/resume",
+    internal: true,
+  },
 ];
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    // TODO: Wire up to a form backend (Formspree, Resend, etc.)
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
+  async function handleSubmit() {
+    const { name, email, message } = formData;
+    if (!name || !email || !message) return;
+
+    setSubmitting(true);
+    setError("");
+
+    try {
+      // Option 1: Web3Forms
+      if (WEB3FORMS_KEY) {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            name,
+            email,
+            message,
+            subject: `Portfolio Contact from ${name}`,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setSubmitted(true);
+          return;
+        }
+        setError("Something went wrong. Please try reaching out via LinkedIn.");
+        return;
+      }
+
+      // Fallback: mailto
+      const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.location.href = `mailto:${getEmail()}?subject=${subject}&body=${body}`;
+      setSubmitted(true);
+    } catch {
+      setError("Network error. Please try reaching out via LinkedIn.");
+    } finally {
+      setSubmitting(false);
+    }
   }
+
+  const hasFormService = !!(WEB3FORMS_KEY);
 
   return (
     <section className="section-gap">
@@ -56,7 +127,7 @@ export default function ContactPage() {
           {/* ── Contact info ── */}
           <motion.div variants={fadeUp} className="lg:col-span-2">
             <h2 className="mb-6 text-xl font-bold">
-              Contact info<span className="text-accent">.</span>
+              Find me here<span className="text-accent">.</span>
             </h2>
 
             <div className="space-y-5">
@@ -69,7 +140,14 @@ export default function ContactPage() {
                     <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
                       {item.label}
                     </p>
-                    {item.href ? (
+                    {item.internal ? (
+                      <a
+                        href={item.href}
+                        className="text-sm text-text-secondary transition-colors hover:text-accent"
+                      >
+                        {item.value}
+                      </a>
+                    ) : (
                       <a
                         href={item.href}
                         target="_blank"
@@ -78,8 +156,6 @@ export default function ContactPage() {
                       >
                         {item.value}
                       </a>
-                    ) : (
-                      <p className="text-sm text-text-secondary">{item.value}</p>
                     )}
                   </div>
                 </div>
@@ -102,15 +178,19 @@ export default function ContactPage() {
                   <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-accent/20 text-accent">
                     <Send size={24} />
                   </div>
-                  <h3 className="mb-2 text-xl font-bold">Message sent!</h3>
+                  <h3 className="mb-2 text-xl font-bold">
+                    {hasFormService ? "Message sent!" : "Email client opened!"}
+                  </h3>
                   <p className="text-sm text-text-secondary">
-                    Thanks for reaching out. I'll get back to you as soon as I can.
+                    {hasFormService
+                      ? "Thanks for reaching out. I'll get back to you as soon as I can."
+                      : "Please send the pre-filled email to complete your message. You can also reach me on LinkedIn."}
                   </p>
                 </div>
               </div>
             ) : (
               <div className="rounded-radius-card border border-border-subtle bg-bg-elevated p-6 md:p-8">
-                <div className="space-y-5" role="form">
+                <div className="space-y-5">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>
                       <label
@@ -169,13 +249,24 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {error && (
+                    <p className="text-sm text-red-400">{error}</p>
+                  )}
+
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover"
+                    disabled={submitting}
+                    className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover disabled:opacity-50"
                   >
-                    Send message <Send size={14} />
+                    {submitting ? "Sending..." : "Send message"} <Send size={14} />
                   </button>
+
+                  {!hasFormService && (
+                    <p className="text-xs text-text-muted">
+                      This will open your email client with a pre-filled message.
+                    </p>
+                  )}
                 </div>
               </div>
             )}

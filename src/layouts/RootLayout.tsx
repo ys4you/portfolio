@@ -2,9 +2,11 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ThemeContext, useThemeProvider } from "@/hooks/useTheme";
 
 export default function RootLayout() {
   const { pathname } = useLocation();
+  const themeValue = useThemeProvider();
 
   // Scroll to top on route change
   useEffect(() => {
@@ -12,12 +14,14 @@ export default function RootLayout() {
   }, [pathname]);
 
   return (
-    <div className="flex min-h-dvh flex-col">
-      <Navbar />
-      <main className="flex-1 pt-16">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
+    <ThemeContext.Provider value={themeValue}>
+      <div className="flex min-h-dvh flex-col">
+        <Navbar />
+        <main className="flex-1 pt-16">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </ThemeContext.Provider>
   );
 }

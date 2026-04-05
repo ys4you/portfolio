@@ -1,11 +1,10 @@
-import { Mail } from "lucide-react";
-import { GitHubIcon, LinkedInIcon } from "@/components/icons/BrandIcons";
+import { GitHubIcon, LinkedInIcon, ItchIcon } from "@/components/icons/BrandIcons";
 import { SITE_NAME } from "@/constants/navigation";
 
 const socials = [
-  { icon: GitHubIcon, href: "https://github.com/", label: "GitHub" },
-  { icon: LinkedInIcon, href: "https://linkedin.com/", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:hello@example.com", label: "Email" },
+  { icon: GitHubIcon, href: "https://github.com/ys4you/", label: "GitHub" },
+  { icon: LinkedInIcon, href: "https://www.linkedin.com/in/yesse-seijnaeve/", label: "LinkedIn" },
+  { icon: ItchIcon, href: "https://ysproductions.itch.io/", label: "itch.io" },
 ];
 
 export default function Footer() {

@@ -21,6 +21,9 @@
   --color-accent-hover: #5eead4;
   --color-accent-subtle: rgba(45, 212, 191, 0.08);
 
+  /* --- Canvas background (used by HeroBackground) --- */
+  --color-canvas-bg: 10, 10, 11;
+
   /* --- Typography --- */
   --font-display: "Syne", sans-serif;
   --font-body: "Outfit", sans-serif;
@@ -42,6 +45,29 @@
 }
 
 /* ============================================
+   LIGHT MODE OVERRIDES
+   ============================================ */
+
+[data-theme="light"] {
+  --color-bg: #f8f8fa;
+  --color-bg-elevated: #ffffff;
+  --color-bg-subtle: #f0f0f3;
+  --color-surface: #e8e8ec;
+  --color-border: #d4d4d8;
+  --color-border-subtle: #e4e4e7;
+
+  --color-text: #18181b;
+  --color-text-secondary: #52525b;
+  --color-text-muted: #a1a1aa;
+
+  --color-accent: #0d9488;
+  --color-accent-hover: #0f766e;
+  --color-accent-subtle: rgba(13, 148, 136, 0.08);
+
+  --color-canvas-bg: 248, 248, 250;
+}
+
+/* ============================================
    BASE STYLES
    ============================================ */
 
@@ -57,6 +83,15 @@
     background-color: var(--color-bg);
     color: var(--color-text);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
   }
 
   ::selection {
