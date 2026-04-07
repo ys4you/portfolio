@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 import { ThemeContext, useThemeProvider } from "@/hooks/useTheme";
 
 export default function RootLayout() {
@@ -21,6 +22,7 @@ export default function RootLayout() {
           <Outlet />
         </main>
         <Footer />
+        <BackToTop />
       </div>
     </ThemeContext.Provider>
   );

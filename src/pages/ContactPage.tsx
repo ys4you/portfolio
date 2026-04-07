@@ -1,8 +1,10 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, FileText } from "lucide-react";
-import { GitHubIcon, LinkedInIcon, ItchIcon } from "@/components/icons/BrandIcons";
+import SEO from "@/components/SEO";
 import PageHeader from "@/components/PageHeader";
+import GitHubActivity from "@/components/GitHubActivity";
+import DiscordPresence from "@/components/DiscordPresence";
+import { IMG } from "@/data/projects";
+import { Code2, Cpu, Globe, Wrench } from "lucide-react";
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -16,261 +18,198 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-// ─── CONFIGURATION ───────────────────────────────────
-const WEB3FORMS_KEY = "";
-
-// ─────────────────────────────────────────────────────
-
-// Email is split to prevent scraping from built JS
-function getEmail() {
-  const parts = ["yesse", "seijn", "gmail", "com"];
-  return `${parts[0]}.${parts[1]}@${parts[2]}.${parts[3]}`;
-}
-
-const INFO_ITEMS = [
+const SKILL_GROUPS = [
   {
-    icon: <GitHubIcon size={18} />,
-    label: "GitHub",
-    value: "ys4you",
-    href: "https://github.com/ys4you/",
+    icon: <Code2 size={22} />,
+    title: "Languages",
+    skills: ["C++", "TypeScript", "C#", "Python", "GLSL"],
   },
   {
-    icon: <LinkedInIcon size={18} />,
-    label: "LinkedIn",
-    value: "Yesse Seijnaeve",
-    href: "https://www.linkedin.com/in/yesse-seijnaeve/",
+    icon: <Cpu size={22} />,
+    title: "Engine & Graphics",
+    skills: ["OpenGL", "Ray Tracing", "Voxel Systems", "SIMD", "Unreal Engine 5"],
   },
   {
-    icon: <ItchIcon size={18} />,
-    label: "itch.io",
-    value: "ysproductions",
-    href: "https://ysproductions.itch.io/",
+    icon: <Globe size={22} />,
+    title: "Web & Backend",
+    skills: ["React", "ASP.NET Core", "Node.js", "Vite", "Tailwind CSS"],
   },
   {
-    icon: <FileText size={18} />,
-    label: "Email & Location",
-    value: "Available on my resume",
-    href: "/resume",
-    internal: true,
+    icon: <Wrench size={22} />,
+    title: "Tools & Workflow",
+    skills: ["Git", "CMake", "n8n", "Docker", "Visual Studio", "Linux"],
   },
 ];
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+const TIMELINE = [
+  {
+    period: "2023 — Present",
+    title: "Game Development Student",
+    org: "Breda University of Applied Sciences",
+    description:
+      "Academy for Games and Media — focusing on C++ graphics programming, engine architecture, and cross-platform development.",
+    type: "education" as const,
+  },
+  {
+    period: "2024 — Present",
+    title: "Web Developer",
+    org: "JG Webmarketing",
+    description:
+      "Building internal tools (PBN Manager, RSS digest system), automation workflows with n8n, and full-stack applications.",
+    type: "work" as const,
+  },
+];
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  async function handleSubmit() {
-    const { name, email, message } = formData;
-    if (!name || !email || !message) return;
-
-    setSubmitting(true);
-    setError("");
-
-    try {
-      // Option 1: Web3Forms
-      if (WEB3FORMS_KEY) {
-        const res = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            name,
-            email,
-            message,
-            subject: `Portfolio Contact from ${name}`,
-          }),
-        });
-        const data = await res.json();
-        if (data.success) {
-          setSubmitted(true);
-          return;
-        }
-        setError("Something went wrong. Please try reaching out via LinkedIn.");
-        return;
-      }
-
-      // Fallback: mailto
-      const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-      window.location.href = `mailto:${getEmail()}?subject=${subject}&body=${body}`;
-      setSubmitted(true);
-    } catch {
-      setError("Network error. Please try reaching out via LinkedIn.");
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  const hasFormService = !!(WEB3FORMS_KEY);
-
+export default function AboutPage() {
   return (
     <section className="section-gap">
+      <SEO
+        title="About"
+        description="Game development student at BUas and web developer at JG Webmarketing. Building ray tracers, voxel engines, and full-stack tools."
+      />
       <div className="page-container">
         <PageHeader
-          title="Get in touch"
+          title="About me"
           accent="."
-          subtitle="Have a question, want to collaborate, or just want to say hi? I'd love to hear from you."
+          subtitle="Developer, builder, and student — driven by curiosity for how things work under the hood."
         />
 
+        {/* ── Bio ── */}
         <motion.div
           variants={stagger}
           initial="hidden"
           animate="show"
-          className="grid gap-12 lg:grid-cols-5"
+          className="mb-20 grid items-start gap-12 lg:grid-cols-5"
         >
-          {/* ── Contact info ── */}
-          <motion.div variants={fadeUp} className="lg:col-span-2">
-            <h2 className="mb-6 text-xl font-bold">
-              Find me here<span className="text-accent">.</span>
+          {/* Photo placeholder */}
+          <motion.div
+            variants={fadeUp}
+            className="aspect-[4/5] w-full overflow-hidden rounded-radius-card border border-border-subtle bg-surface lg:col-span-2"
+          >
+            <img
+              src={IMG.profile}
+              alt="Yesse Seijnaeve"
+              className="h-full w-full object-cover"
+            />
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="lg:col-span-3">
+            <h2 className="mb-4 text-2xl font-bold md:text-3xl">
+              Hey, I'm <span className="text-accent">Yesse</span>
             </h2>
-
-            <div className="space-y-5">
-              {INFO_ITEMS.map((item) => (
-                <div key={item.label} className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-radius-sm bg-accent-subtle text-accent">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
-                      {item.label}
-                    </p>
-                    {item.internal ? (
-                      <a
-                        href={item.href}
-                        className="text-sm text-text-secondary transition-colors hover:text-accent"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-text-secondary transition-colors hover:text-accent"
-                      >
-                        {item.value}
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 rounded-radius-card border border-border-subtle bg-bg-elevated p-5">
-              <p className="text-sm text-text-secondary leading-relaxed">
-                I'm currently open to freelance work, internships, and collaboration on
-                interesting game or web projects. Don't hesitate to reach out!
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                I'm a game development student at BUas in Breda, specializing in C++ and
+                graphics programming. I love going deep — whether that's implementing a
+                ray tracer from scratch, building voxel engines with chunk streaming, or
+                optimizing SIMD-heavy render loops.
+              </p>
+              <p>
+                Outside of game tech, I build full-stack web applications and internal
+                tooling for JG Webmarketing, working across React, TypeScript, C#, and
+                Python. I enjoy the entire spectrum from low-level performance work to
+                polished UI.
+              </p>
+              <p>
+                When I'm not coding, you'll find me exploring game design concepts,
+                experimenting with neurofeedback software, or tinkering with automation
+                workflows.
               </p>
             </div>
           </motion.div>
+        </motion.div>
 
-          {/* ── Form ── */}
-          <motion.div variants={fadeUp} className="lg:col-span-3">
-            {submitted ? (
-              <div className="flex h-full items-center justify-center rounded-radius-card border border-accent/20 bg-accent-subtle p-12 text-center">
-                <div>
-                  <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-accent/20 text-accent">
-                    <Send size={24} />
-                  </div>
-                  <h3 className="mb-2 text-xl font-bold">
-                    {hasFormService ? "Message sent!" : "Email client opened!"}
-                  </h3>
-                  <p className="text-sm text-text-secondary">
-                    {hasFormService
-                      ? "Thanks for reaching out. I'll get back to you as soon as I can."
-                      : "Please send the pre-filled email to complete your message. You can also reach me on LinkedIn."}
-                  </p>
+        {/* ── Skills ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <h2 className="mb-8 text-2xl font-bold md:text-3xl">
+            Skills &amp; tools<span className="text-accent">.</span>
+          </h2>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {SKILL_GROUPS.map((group) => (
+              <div
+                key={group.title}
+                className="rounded-radius-card border border-border-subtle bg-bg-elevated p-6"
+              >
+                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-radius-sm bg-accent-subtle text-accent">
+                  {group.icon}
                 </div>
+                <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-text-muted">
+                  {group.title}
+                </h3>
+                <ul className="space-y-1.5">
+                  {group.skills.map((skill) => (
+                    <li key={skill} className="text-sm text-text-secondary">
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ) : (
-              <div className="rounded-radius-card border border-border-subtle bg-bg-elevated p-6 md:p-8">
-                <div className="space-y-5">
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-text-muted"
-                      >
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="Your name"
-                        className="w-full rounded-radius-sm border border-border bg-surface px-4 py-2.5 text-sm text-text placeholder:text-text-muted outline-none transition-colors focus:border-accent"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-text-muted"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="you@example.com"
-                        className="w-full rounded-radius-sm border border-border bg-surface px-4 py-2.5 text-sm text-text placeholder:text-text-muted outline-none transition-colors focus:border-accent"
-                      />
-                    </div>
-                  </div>
+            ))}
+          </div>
+        </motion.div>
 
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-text-muted"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={6}
-                      placeholder="Tell me about your project or idea..."
-                      className="w-full resize-none rounded-radius-sm border border-border bg-surface px-4 py-2.5 text-sm text-text placeholder:text-text-muted outline-none transition-colors focus:border-accent"
-                    />
-                  </div>
+        {/* ── GitHub Activity ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <h2 className="mb-8 text-2xl font-bold md:text-3xl">
+            Activity<span className="text-accent">.</span>
+          </h2>
+          <div className="space-y-6">
+            <GitHubActivity username="ys4you" />
+            <DiscordPresence />
+          </div>
+        </motion.div>
 
-                  {error && (
-                    <p className="text-sm text-red-400">{error}</p>
-                  )}
+        {/* ── Timeline ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="mb-8 text-2xl font-bold md:text-3xl">
+            Experience &amp; education<span className="text-accent">.</span>
+          </h2>
 
-                  <button
-                    type="button"
-                    onClick={handleSubmit}
-                    disabled={submitting}
-                    className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover disabled:opacity-50"
-                  >
-                    {submitting ? "Sending..." : "Send message"} <Send size={14} />
-                  </button>
+          <div className="relative border-l-2 border-border-subtle pl-8">
+            {TIMELINE.map((entry, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                className="relative mb-10 last:mb-0"
+              >
+                {/* Dot */}
+                <div
+                  className={`absolute -left-[calc(2rem+5px)] top-1.5 h-3 w-3 rounded-full border-2 ${
+                    entry.type === "work"
+                      ? "border-accent bg-accent/30"
+                      : "border-text-muted bg-text-muted/30"
+                  }`}
+                />
 
-                  {!hasFormService && (
-                    <p className="text-xs text-text-muted">
-                      This will open your email client with a pre-filled message.
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-          </motion.div>
+                <span className="mb-1 block font-mono text-xs tracking-wider text-text-muted uppercase">
+                  {entry.period}
+                </span>
+                <h3 className="text-lg font-bold">{entry.title}</h3>
+                <p className="text-sm font-medium text-accent">{entry.org}</p>
+                <p className="mt-2 text-sm text-text-secondary leading-relaxed">
+                  {entry.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

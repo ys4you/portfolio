@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Download, Briefcase, GraduationCap, Zap } from "lucide-react";
+import SEO from "@/components/SEO";
 import PageHeader from "@/components/PageHeader";
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -48,6 +49,10 @@ const TECH_SKILLS = [
 export default function ResumePage() {
   return (
     <section className="section-gap">
+      <SEO
+        title="Resume"
+        description="Experience, education, and technical skills of Yesse Seijnaeve — game and web developer."
+      />
       <div className="page-container max-w-4xl">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <PageHeader

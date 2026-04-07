@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ExternalLink, Download, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, Download, Users } from "lucide-react";
+import SEO from "@/components/SEO";
 import { PROJECTS } from "@/data/projects";
 import { getProjectDetail } from "@/data/project-content";
 import SectionRenderer from "@/components/project/SectionRenderer";
@@ -12,10 +13,23 @@ export default function ProjectDetailPage() {
   const project = PROJECTS.find((p) => p.slug === slug);
   const detail = slug ? getProjectDetail(slug) : undefined;
 
+  // Find prev/next non-archived projects
+  const activeProjects = PROJECTS.filter((p) => !p.archived);
+  const currentIdx = activeProjects.findIndex((p) => p.slug === slug);
+  const prevProject = currentIdx > 0 ? activeProjects[currentIdx - 1] : null;
+  const nextProject = currentIdx < activeProjects.length - 1 ? activeProjects[currentIdx + 1] : null;
+
   if (!project) return <Navigate to="/projects" replace />;
 
   return (
     <article className="section-gap">
+      <SEO
+        title={project.title}
+        description={project.description}
+        image={project.thumbnail || undefined}
+        url={`https://yesseseijn.com/projects/${project.slug}`}
+        type="article"
+      />
       <div className="page-container max-w-4xl">
         {/* Back link */}
         <Link
@@ -163,12 +177,54 @@ export default function ProjectDetailPage() {
 
         {/* Bottom nav */}
         <div className="mt-16 border-t border-border-subtle pt-8">
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary transition-colors hover:text-accent"
-          >
-            <ArrowLeft size={14} /> All projects
-          </Link>
+          <div className="flex items-center justify-between">
+            <div>
+              {prevProject ? (
+                <Link
+                  to={`/projects/${prevProject.slug}`}
+                  className="group flex items-center gap-2"
+                >
+                  <ArrowLeft
+                    size={14}
+                    className="text-text-muted transition-transform group-hover:-translate-x-1 group-hover:text-accent"
+                  />
+                  <div>
+                    <p className="text-xs text-text-muted">Previous</p>
+                    <p className="text-sm font-medium text-text-secondary transition-colors group-hover:text-accent">
+                      {prevProject.title}
+                    </p>
+                  </div>
+                </Link>
+              ) : (
+                <Link
+                  to="/projects"
+                  className="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-accent"
+                >
+                  <ArrowLeft size={14} /> All projects
+                </Link>
+              )}
+            </div>
+
+            <div className="text-right">
+              {nextProject && (
+                <Link
+                  to={`/projects/${nextProject.slug}`}
+                  className="group flex items-center gap-2"
+                >
+                  <div>
+                    <p className="text-xs text-text-muted">Next</p>
+                    <p className="text-sm font-medium text-text-secondary transition-colors group-hover:text-accent">
+                      {nextProject.title}
+                    </p>
+                  </div>
+                  <ArrowRight
+                    size={14}
+                    className="text-text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent"
+                  />
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </article>

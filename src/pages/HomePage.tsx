@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Gamepad2, Globe } from "lucide-react";
+import SEO from "@/components/SEO";
 import HeroBackground from "@/components/HeroBackground";
 import Typewriter from "@/components/Typewriter";
 import BentoGrid from "@/components/BentoGrid";
@@ -21,6 +22,7 @@ const fadeUp = {
 export default function HomePage() {
   return (
     <>
+      <SEO />
       {/* ── Split Hero ── */}
       <section className="relative overflow-hidden">
         <HeroBackground />

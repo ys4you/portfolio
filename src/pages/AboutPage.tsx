@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 import PageHeader from "@/components/PageHeader";
+import GitHubActivity from "@/components/GitHubActivity";
+import DiscordPresence from "@/components/DiscordPresence";
 import { IMG } from "@/data/projects";
 import { Code2, Cpu, Globe, Wrench } from "lucide-react";
 
@@ -60,6 +63,10 @@ const TIMELINE = [
 export default function AboutPage() {
   return (
     <section className="section-gap">
+      <SEO
+        title="About"
+        description="Game development student at BUas and web developer at JG Webmarketing. Building ray tracers, voxel engines, and full-stack tools."
+      />
       <div className="page-container">
         <PageHeader
           title="About me"
@@ -144,6 +151,22 @@ export default function AboutPage() {
                 </ul>
               </div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* ── GitHub Activity ── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <h2 className="mb-8 text-2xl font-bold md:text-3xl">
+            Activity<span className="text-accent">.</span>
+          </h2>
+          <div className="space-y-6">
+            <GitHubActivity username="ys4you" />
+            <DiscordPresence />
           </div>
         </motion.div>
 

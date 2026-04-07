@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { X, Archive } from "lucide-react";
+import SEO from "@/components/SEO";
 import PageHeader from "@/components/PageHeader";
 import BentoGrid from "@/components/BentoGrid";
 import ProjectCard from "@/components/ProjectCard";
@@ -54,6 +55,10 @@ export default function ProjectsPage() {
 
   return (
     <section className="section-gap">
+      <SEO
+        title="Projects"
+        description="A selection of games, tools, and applications built by Yesse Seijnaeve."
+      />
       <div className="page-container">
         <PageHeader
           title={isArchive ? "Archive" : "Projects"}
