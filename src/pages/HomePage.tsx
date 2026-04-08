@@ -170,7 +170,7 @@ export default function HomePage() {
           >
             <div className="aspect-[4/5] overflow-hidden rounded-radius-card border border-border-subtle bg-surface md:col-span-2">
               <img
-                src={IMG.profile}
+                src={IMG.aboutMeHome}
                 alt="Yesse Seijnaeve"
                 className="h-full w-full object-cover"
               />

@@ -54,7 +54,7 @@ export default function AboutPage() {
             className="aspect-[4/5] w-full overflow-hidden rounded-radius-card border border-border-subtle bg-surface lg:col-span-2"
           >
             <img
-              src={IMG.profile}
+              src={IMG.aboutMe}
               alt="Yesse Seijnaeve"
               className="h-full w-full object-cover"
             />

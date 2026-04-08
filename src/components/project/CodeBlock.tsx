@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Highlight, Prism, themes } from "prism-react-renderer";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 
 // Register additional languages not included by default
@@ -29,6 +29,9 @@ async function loadLanguages() {
 }
 
 const langReady = loadLanguages();
+
+const COLLAPSE_THRESHOLD = 15; // lines before collapsing
+const COLLAPSED_HEIGHT = 320; // px
 
 interface CodeBlockProps {
   code: string;
@@ -65,6 +68,8 @@ const LANG_MAP: Record<string, string> = {
 export default function CodeBlock({ code, language, filename, title }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const [ready, setReady] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const codeRef = useRef<HTMLDivElement>(null);
   const { theme: siteTheme } = useTheme();
 
   const isDark = siteTheme === "dark";
@@ -74,6 +79,7 @@ export default function CodeBlock({ code, language, filename, title }: CodeBlock
   const mutedColor = isDark ? "rgba(209,213,218,0.5)" : "rgba(100,100,100,0.6)";
   const lineNumColor = isDark ? "rgba(209,213,218,0.25)" : "rgba(0,0,0,0.2)";
   const plainTextColor = isDark ? "#d6deeb" : "#24292e";
+  const fadeColor = isDark ? "rgb(1, 22, 39)" : "rgb(255, 255, 255)";
 
   useEffect(() => {
     langReady.then(() => setReady(true));
@@ -87,6 +93,9 @@ export default function CodeBlock({ code, language, filename, title }: CodeBlock
 
   const prismLang = LANG_MAP[language.toLowerCase()] || language.toLowerCase();
   const trimmedCode = code.trim();
+  const lineCount = trimmedCode.split("\n").length;
+  const shouldCollapse = lineCount > COLLAPSE_THRESHOLD;
+  const isCollapsed = shouldCollapse && !expanded;
 
   return (
     <div className="my-6 overflow-hidden rounded-radius-card border" style={{ background: bgColor, borderColor }}>
@@ -101,6 +110,11 @@ export default function CodeBlock({ code, language, filename, title }: CodeBlock
           <span className="font-mono text-xs" style={{ color: mutedColor }}>
             {filename || title || language}
           </span>
+          {shouldCollapse && (
+            <span className="font-mono text-[10px]" style={{ color: mutedColor }}>
+              {lineCount} lines
+            </span>
+          )}
         </div>
         <button
           onClick={handleCopy}
@@ -113,39 +127,75 @@ export default function CodeBlock({ code, language, filename, title }: CodeBlock
         </button>
       </div>
 
-      {/* Highlighted code */}
-      {ready ? (
-        <Highlight
-          theme={codeTheme}
-          code={trimmedCode}
-          language={prismLang}
-          prism={Prism}
+      {/* Code content with collapse */}
+      <div
+        ref={codeRef}
+        className="relative overflow-hidden transition-[max-height] duration-300 ease-in-out"
+        style={{ maxHeight: isCollapsed ? `${COLLAPSED_HEIGHT}px` : "none" }}
+      >
+        {/* Highlighted code */}
+        {ready ? (
+          <Highlight
+            theme={codeTheme}
+            code={trimmedCode}
+            language={prismLang}
+            prism={Prism}
+          >
+            {({ tokens, getLineProps, getTokenProps }) => (
+              <div className="overflow-x-auto p-4" style={{ background: bgColor }}>
+                <pre className="font-mono text-sm leading-relaxed" style={{ background: "transparent" }}>
+                  {tokens.map((line, i) => (
+                    <div key={i} {...getLineProps({ line })} className="flex">
+                      <span className="mr-4 inline-block w-8 select-none text-right" style={{ color: lineNumColor }}>
+                        {i + 1}
+                      </span>
+                      <span>
+                        {line.map((token, j) => (
+                          <span key={j} {...getTokenProps({ token })} />
+                        ))}
+                      </span>
+                    </div>
+                  ))}
+                </pre>
+              </div>
+            )}
+          </Highlight>
+        ) : (
+          <div className="overflow-x-auto p-4" style={{ background: bgColor }}>
+            <pre className="font-mono text-sm leading-relaxed" style={{ color: plainTextColor }}>
+              <code>{trimmedCode}</code>
+            </pre>
+          </div>
+        )}
+
+        {/* Fade overlay when collapsed */}
+        {isCollapsed && (
+          <div
+            className="pointer-events-none absolute bottom-0 left-0 right-0 h-24"
+            style={{
+              background: `linear-gradient(transparent, ${fadeColor})`,
+            }}
+          />
+        )}
+      </div>
+
+      {/* Expand/Collapse button */}
+      {shouldCollapse && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="flex w-full items-center justify-center gap-1.5 py-2.5 text-xs font-medium transition-colors hover:text-accent"
+          style={{ color: mutedColor, borderTop: `1px solid ${borderColor}` }}
         >
-          {({ tokens, getLineProps, getTokenProps }) => (
-            <div className="overflow-x-auto p-4" style={{ background: bgColor }}>
-              <pre className="font-mono text-sm leading-relaxed" style={{ background: "transparent" }}>
-                {tokens.map((line, i) => (
-                  <div key={i} {...getLineProps({ line })} className="flex">
-                    <span className="mr-4 inline-block w-8 select-none text-right" style={{ color: lineNumColor }}>
-                      {i + 1}
-                    </span>
-                    <span>
-                      {line.map((token, j) => (
-                        <span key={j} {...getTokenProps({ token })} />
-                      ))}
-                    </span>
-                  </div>
-                ))}
-              </pre>
-            </div>
+          {expanded ? (
+            <>
+              <ChevronUp size={14} /> Collapse
+            </>
+          ) : (
+            <>
+              <ChevronDown size={14} /> Show all {lineCount} lines
+            </>
           )}
-        </Highlight>
-      ) : (
-        <div className="overflow-x-auto p-4" style={{ background: bgColor }}>
-          <pre className="font-mono text-sm leading-relaxed" style={{ color: plainTextColor }}>
-            <code>{trimmedCode}</code>
-          </pre>
-        </div>
+        </button>
       )}
     </div>
   );

@@ -8,6 +8,35 @@ import { PROJECTS } from "@/data/projects";
 
 type CategoryFilter = "all" | "game" | "web" | "software" | "archive";
 
+// Tag categories for grouped filtering
+const TAG_GROUPS: { label: string; tags: string[] }[] = [
+  {
+    label: "Language",
+    tags: ["C#", "C++", "JavaScript"],
+  },
+  {
+    label: "Context",
+    tags: ["School", "Work", "Internship"],
+  },
+  {
+    label: "Technology",
+    tags: [
+      "Unity",
+      "Canvas Engine",
+      "Tmpl8",
+      "Ray Tracing",
+      "Voxels",
+      "SIMD",
+      "FSM",
+      "Procedural Generation",
+      "Tree-sitter",
+      "VS Code",
+      "DSL",
+      "Game Jam",
+    ],
+  },
+];
+
 export default function ProjectsPage() {
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
@@ -22,14 +51,14 @@ export default function ProjectsPage() {
     return active.filter((p) => p.category === category);
   }, [category, isArchive]);
 
-  // Get all unique tags from the base pool
-  const allTags = useMemo(() => {
+  // Get tags that exist in the current pool
+  const availableTags = useMemo(() => {
     const tags = new Set<string>();
     basePool.forEach((p) => p.tags.forEach((t) => tags.add(t)));
-    return Array.from(tags).sort();
+    return tags;
   }, [basePool]);
 
-  // Filter by tags
+  // Filter by tags (AND within same group, OR across groups)
   const filtered = useMemo(() => {
     if (activeTags.size === 0) return basePool;
     return basePool.filter((p) => p.tags.some((t) => activeTags.has(t)));
@@ -71,7 +100,7 @@ export default function ProjectsPage() {
         />
 
         {/* Category filter */}
-        <div className="mb-4 flex flex-wrap gap-2">
+        <div className="mb-6 flex flex-wrap gap-2">
           {(["all", "game", "web", "software"] as const).map((f) => (
             <button
               key={f}
@@ -82,7 +111,13 @@ export default function ProjectsPage() {
                   : "border border-border-subtle text-text-secondary hover:text-text"
               }`}
             >
-              {f === "all" ? "All" : f === "game" ? "Games" : f === "web" ? "Web" : "Software"}
+              {f === "all"
+                ? "All"
+                : f === "game"
+                ? "Games"
+                : f === "web"
+                ? "Web"
+                : "Software"}
             </button>
           ))}
 
@@ -100,33 +135,47 @@ export default function ProjectsPage() {
           </button>
         </div>
 
-        {/* Tag filter */}
-        {allTags.length > 0 && (
-          <div className="mb-10 flex flex-wrap items-center gap-2">
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => toggleTag(tag)}
-                className={`rounded-radius-pill px-3 py-1 text-xs font-medium transition-colors ${
-                  activeTags.has(tag)
-                    ? "bg-accent/15 text-accent border border-accent/30"
-                    : "border border-border-subtle text-text-muted hover:text-text-secondary hover:border-border"
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
+        {/* Grouped tag filters */}
+        <div className="mb-10 space-y-3">
+          {TAG_GROUPS.map((group) => {
+            // Only show tags that exist in the current pool
+            const visibleTags = group.tags.filter((t) => availableTags.has(t));
+            if (visibleTags.length === 0) return null;
 
-            {activeTags.size > 0 && (
+            return (
+              <div key={group.label} className="flex flex-wrap items-center gap-2">
+                <span className="w-20 shrink-0 text-[11px] font-bold uppercase tracking-wider text-text-muted">
+                  {group.label}
+                </span>
+                {visibleTags.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => toggleTag(tag)}
+                    className={`rounded-radius-pill px-3 py-1 text-xs font-medium transition-colors ${
+                      activeTags.has(tag)
+                        ? "bg-accent/15 text-accent border border-accent/30"
+                        : "border border-border-subtle text-text-muted hover:text-text-secondary hover:border-border"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            );
+          })}
+
+          {activeTags.size > 0 && (
+            <div className="flex items-center gap-2 pt-1">
+              <span className="w-20 shrink-0" />
               <button
                 onClick={clearTags}
                 className="inline-flex items-center gap-1 rounded-radius-pill px-3 py-1 text-xs font-medium text-text-muted transition-colors hover:text-accent"
               >
-                <X size={12} /> Clear
+                <X size={12} /> Clear all filters
               </button>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
 
         {/* Results */}
         {filtered.length > 0 ? (

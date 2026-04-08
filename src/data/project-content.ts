@@ -10,7 +10,7 @@ import type { ProjectDetail } from "@/types";
  */
 
 export const PROJECT_DETAILS: ProjectDetail[] = [
-  // ── Tmpl8 Ray Tracer ────────────────────────────────
+  // ── CPU Ray Tracer ────────────────────────────────
   {
     slug: "tmpl8-raytracer",
     meta: {
@@ -125,37 +125,86 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         "Tijmen Zwaneveld (Artist)",
       ],
       duration: "21 Sep 2023 - 17 Nov 2023",
-      tools: "Unity · C# · FSM",
+      tools: "Unity · C# · FSM · Scriptable Objects",
     },
     sections: [
       {
         type: "text",
         title: "Introduction",
         content:
-          "This project aimed to publish our own game as part of a team. We had about 8 weeks to plan and create everything. I was part of a team of six, and we strived to create the best game we could. We created the best itch.io page of the year.",
-      },
-      {
-        type: "video",
-        title: "Gameplay Demo",
-        src: "https://www.youtube.com/embed/fZ_vfsLooEo",
+          "Space Fishing was a team project where we had 8 weeks to plan, build, and publish a game. Our team of six created a cosmic fishing adventure where players explore alien planets, catch exotic species, and upgrade their equipment. We won best itch.io page of the year for our cohort.",
       },
       {
         type: "text",
         title: "My Contributions",
         content:
-          "I made two main contributions: the player controller and the dialogue system. Additionally, I created the tutorial. Although a tutorial wasn't initially planned, my team insisted that we include one, so I had to quickly put one together.",
+          "I was responsible for two major systems: the player controller and the dialogue system. I also built the tutorial, which wasn't originally planned but the team decided we needed one late in development, so I had to put it together quickly.",
       },
       {
         type: "text",
-        title: "Player Controller",
+        title: "Player Controller (FSM)",
         content:
-          "The player controller was implemented using a Finite State Machine (FSM), which I selected due to the uncertainty surrounding the player's full range of abilities. The FSM proved to be an ideal solution, offering flexibility for future expansion while maintaining robust control and preventing unintended alterations.",
+          "I chose a Finite State Machine pattern for the player controller because we weren't sure early on what the full range of player abilities would be. The FSM made it easy to add new states later without breaking existing behavior.\n\nThe architecture has a central PlayerStateMachine that manages state transitions, a PlayerBaseState that all states inherit from, a PlayerStateFactory that creates state instances, and concrete states for each behavior (Idle, Walk, Jump, Grounded).",
+      },
+      {
+        type: "code-remote",
+        title: "State Machine Core",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/FSM%20player/PlayerStateMachine.cs",
+      },
+      {
+        type: "code-remote",
+        title: "Base State Pattern",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/FSM%20player/PlayerBaseState.cs",
+      },
+      {
+        type: "code-remote",
+        title: "Walk State Implementation",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/FSM%20player/PlayerWalkState.cs",
+      },
+      {
+        type: "code-remote",
+        title: "State Factory",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/FSM%20player/PlayerStateFactory.cs",
       },
       {
         type: "text",
         title: "Dialogue System",
         content:
-          'I designed the dialogue system to be as external as possible. To achieve this, I created static utilities that allow the dialogue system to function without dependencies. The only reference it requires is a Scriptable Object (SO), which defines an interaction.\n\nEach line has an "original dialogue text" field. The system performs a text check for specific keywords - such as "player" (replaced with the player\'s name) and "LEFT" (replaced with the corresponding keybind). The system also retrieves the correct speaker sprite through a singleton, loading it on demand if not found.',
+          "I designed the dialogue system to be as decoupled as possible. The core logic lives in static utility functions so it has zero dependencies on scene objects. The only data it needs is a Scriptable Object that defines an interaction, which is an array of DialogueLine objects.\n\nEach line has an \"original dialogue text\" field where the system scans for keywords like \"player\" (replaced with the actual player name from the GameManager) and keybind tokens like \"LEFT\" (replaced with whatever key the player has bound for that action).\n\nThe DialogueSpriteManager is a singleton that loads and caches character sprites on demand. When a dialogue line specifies a speaker and sprite name, the manager retrieves the correct sprite, loading it from Resources if it hasn't been cached yet.",
+      },
+      {
+        type: "code-remote",
+        title: "Dialogue Manager",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/Dialogue/DialogueManager.cs",
+      },
+      {
+        type: "code-remote",
+        title: "Dialogue Utilities (Keyword Replacement)",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/Dialogue/DialogueUtilities.cs",
+      },
+      {
+        type: "code-remote",
+        title: "Sprite Manager (Singleton)",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/Dialogue/DialogueSpriteManager.cs",
+      },
+      {
+        type: "code-remote",
+        title: "Dialogue Line Data Structure",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/Dialogue/DialogueLine.cs",
+      },
+      {
+        type: "code-remote",
+        title: "Typewriter Text Effect",
+        language: "csharp",
+        src: "https://raw.githubusercontent.com/ys4you/space-fishing/main/Assets/_project/Scripts/Dialogue/TypewriterEffect.cs",
       },
     ],
   },
