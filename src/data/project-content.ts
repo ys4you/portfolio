@@ -6,16 +6,81 @@ import type { ProjectDetail } from "@/types";
  * To add a new project detail page:
  * 1. Add a Project entry in projects.ts (for the card)
  * 2. Add a ProjectDetail entry here (for the detail page)
- * 3. That's it — the router picks it up automatically via slug
+ * 3. That's it - the router picks it up automatically via slug
  */
 
 export const PROJECT_DETAILS: ProjectDetail[] = [
+  // ── Tmpl8 Ray Tracer ────────────────────────────────
+  {
+    slug: "tmpl8-raytracer",
+    meta: {
+      role: "Solo Developer",
+      duration: "Feb 2025 - Present",
+      tools: "C++ · Tmpl8 Framework · SIMD · MagicaVoxel · ImGui",
+    },
+    sections: [
+      {
+        type: "text",
+        title: "Introduction",
+        content:
+          "A CPU-based voxel ray tracer built from scratch on the Tmpl8 framework as part of my studies at BUas. The project focuses on real-time rendering of voxel scenes with support for instanced geometry, dynamic lighting, and post-processing effects.",
+      },
+      {
+        type: "video",
+        title: "Demo",
+        src: "https://www.youtube.com/embed/677SQQsPDNU",
+      },
+      {
+        type: "text",
+        title: "Voxel Rendering & Instancing",
+        content:
+          "The renderer supports MagicaVoxel .vox scene imports and uses a two-level acceleration structure (TLAS/BLAS) with brickmaps for efficient ray traversal. Instanced voxel cubes allow rendering complex scenes like a 3D Conway's Game of Life simulation without duplicating geometry data.",
+      },
+      {
+        type: "code-remote",
+        title: "Voxel Instance System",
+        language: "cpp",
+        src: "https://raw.githubusercontent.com/ys4you/raytracking/fixed-main/VoxelInstance.h",
+      },
+      {
+        type: "text",
+        title: "3D Conway's Game of Life",
+        content:
+          "One of the showcase scenes is a 3D Game of Life running on the grid. I experimented with stable 3D rulesets like Coral, Growth, and Sprawl to find visually interesting patterns that evolve over time. Each alive cell is rendered as an instanced voxel cube.",
+      },
+      {
+        type: "code-remote",
+        title: "Living Cube Scene",
+        language: "cpp",
+        src: "https://raw.githubusercontent.com/ys4you/raytracking/fixed-main/LivingCubeScene.h",
+      },
+      {
+        type: "text",
+        title: "Renderer & Scene Management",
+        content:
+          "The scene system uses a SceneManager that handles transitions, camera state, and event playback. Multiple scenes (GyroscopeScene, HelixScene, InfinityMirrorScene, OrbitCloudScene, etc.) can be switched at runtime through the ImGui interface.",
+      },
+      {
+        type: "code-remote",
+        title: "Core Renderer",
+        language: "cpp",
+        src: "https://raw.githubusercontent.com/ys4you/raytracking/fixed-main/renderer.cpp",
+      },
+      {
+        type: "text",
+        title: "Performance",
+        content:
+          "Performance optimization was a major focus. The FindNearest and IsOccluded functions were profiled and optimized with SIMD intrinsics. The brickmap acceleration structure significantly reduced ray traversal time compared to naive voxel intersection.",
+      },
+    ],
+  },
+
   // ── Panic 20 ─────────────────────────────────────────
   {
     slug: "panic20",
     meta: {
       role: "Solo Developer",
-      duration: "17 Oct 2022 — 21 Oct 2022",
+      duration: "17 Oct 2022 - 21 Oct 2022",
       tools: "C# · Canvas Engine (in-house)",
     },
     sections: [
@@ -29,13 +94,13 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "In my first school project, I set out on a creative journey with just three weeks of C# and OOP basics under my belt. 'Panic20' was born — a microgame where players roam freely and dodge obstacles. This project epitomizes my early programming prowess and ability to seize creative freedom, even as a beginner, setting the tone for my journey into game development.",
+          "In my first school project, I set out on a creative journey with just three weeks of C# and OOP basics under my belt. 'Panic20' was born - a microgame where players roam freely and dodge obstacles. This project epitomizes my early programming prowess and ability to seize creative freedom, even as a beginner, setting the tone for my journey into game development.",
       },
       {
         type: "text",
         title: "Spawning Bones",
         content:
-          'Creating bones presented a captivating challenge. I aimed to design two types: shorter ones and longer ones. To achieve this, I created two classes — "Bone" and "BoneShort."\n\nWithin these classes, I seamlessly combined a Bitmap with a rectangular frame to animate the bones gracefully. Additionally, I implemented an efficient AABB collision detection system within the level. This system accurately determined if the player had entered the bone zones, deducting their health as a consequence.',
+          'Creating bones presented a captivating challenge. I aimed to design two types: shorter ones and longer ones. To achieve this, I created two classes - "Bone" and "BoneShort."\n\nWithin these classes, I seamlessly combined a Bitmap with a rectangular frame to animate the bones gracefully. Additionally, I implemented an efficient AABB collision detection system within the level. This system accurately determined if the player had entered the bone zones, deducting their health as a consequence.',
       },
       {
         type: "code-remote",
@@ -59,7 +124,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         "Yesse Seijnaeve (Developer)",
         "Tijmen Zwaneveld (Artist)",
       ],
-      duration: "21 Sep 2023 — 17 Nov 2023",
+      duration: "21 Sep 2023 - 17 Nov 2023",
       tools: "Unity · C# · FSM",
     },
     sections: [
@@ -68,6 +133,11 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         title: "Introduction",
         content:
           "This project aimed to publish our own game as part of a team. We had about 8 weeks to plan and create everything. I was part of a team of six, and we strived to create the best game we could. We created the best itch.io page of the year.",
+      },
+      {
+        type: "video",
+        title: "Gameplay Demo",
+        src: "https://www.youtube.com/embed/fZ_vfsLooEo",
       },
       {
         type: "text",
@@ -85,7 +155,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Dialogue System",
         content:
-          'I designed the dialogue system to be as external as possible. To achieve this, I created static utilities that allow the dialogue system to function without dependencies. The only reference it requires is a Scriptable Object (SO), which defines an interaction.\n\nEach line has an "original dialogue text" field. The system performs a text check for specific keywords — such as "player" (replaced with the player\'s name) and "LEFT" (replaced with the corresponding keybind). The system also retrieves the correct speaker sprite through a singleton, loading it on demand if not found.',
+          'I designed the dialogue system to be as external as possible. To achieve this, I created static utilities that allow the dialogue system to function without dependencies. The only reference it requires is a Scriptable Object (SO), which defines an interaction.\n\nEach line has an "original dialogue text" field. The system performs a text check for specific keywords - such as "player" (replaced with the player\'s name) and "LEFT" (replaced with the corresponding keybind). The system also retrieves the correct speaker sprite through a singleton, loading it on demand if not found.',
       },
     ],
   },
@@ -95,7 +165,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
     slug: "landmass-generator",
     meta: {
       role: "Solo Developer",
-      duration: "23 Dec 2023 — 29 Jan 2024",
+      duration: "23 Dec 2023 - 29 Jan 2024",
       tools: "Unity · C# · Perlin Noise",
     },
     sections: [
@@ -126,6 +196,36 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
     ],
   },
 
+  // ── Syntax Highlighting ──────────────────────────────
+  {
+    slug: "syntax-highlighting",
+    meta: {
+      role: "Solo Developer",
+      duration: "29 Aug 2024 - 31 Jan 2025",
+      tools: "Tree-sitter · JavaScript · VS Code Extension API",
+    },
+    sections: [
+      {
+        type: "text",
+        title: "Introduction",
+        content:
+          "During my internship at the Maritime Research Institute Netherlands (MARIN), I was assigned the task of implementing syntax highlighting for their Extensible Modeling Framework (XMF).\n\nTo achieve this, I used Tree-sitter, a parser generation tool developed by GitHub. With Tree-sitter, I created a Visual Studio Code extension to enhance the readability of XMF code.\n\nThe project was divided into two parts: building the parser with Tree-sitter, and building the VS Code extension to display the colors.",
+      },
+      {
+        type: "text",
+        title: "Tree-sitter Parser",
+        content:
+          "The Tree-sitter implementation was written in JavaScript, which includes a domain-specific language (DSL) for defining dynamic tokens.\n\nThe parser processes source code and can detect errors like missing semicolons. If you want to learn more about Tree-sitter, I recommend reading the official documentation at tree-sitter.github.io.",
+      },
+      {
+        type: "text",
+        title: "VS Code Extension",
+        content:
+          "For the extension part, I needed to use the Tree-sitter parser to analyze the source code being edited in Visual Studio Code. The extension hooks into VS Code's extension API to provide real-time syntax highlighting, code folding, and IntelliSense features for XMF files.",
+      },
+    ],
+  },
+
   // ── Archived ─────────────────────────────────────────
 
   // ── Goopy ────────────────────────────────────────────
@@ -134,7 +234,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
     meta: {
       role: "Solo Developer",
       team: ["Norah (Artist)", "Tijmen (Artist)", "Yesse (Developer)", "Lola (Artist)"],
-      duration: "18 Sep 2023 — 20 Sep 2023 (72h Game Jam)",
+      duration: "18 Sep 2023 - 20 Sep 2023 (72h Game Jam)",
       tools: "Unity · C#",
     },
     sections: [
@@ -142,7 +242,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "My Role",
         content:
-          'In a high-pressure 72-hour game jam, I served as the solo developer — managing scene creation, script development, and post-jam bug fixes. Despite the challenges, I successfully delivered a polished and functional game.\n\nI invite you to explore "Goopy," our 2.5D tower defense game reminiscent of the beloved Plants vs. Zombies series.',
+          'In a high-pressure 72-hour game jam, I served as the solo developer - managing scene creation, script development, and post-jam bug fixes. Despite the challenges, I successfully delivered a polished and functional game.\n\nI invite you to explore "Goopy," our 2.5D tower defense game reminiscent of the beloved Plants vs. Zombies series.',
       },
       {
         type: "text",
@@ -200,7 +300,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
     slug: "2d-platformer",
     meta: {
       role: "Solo Developer",
-      duration: "28 Nov 2022 — 9 Dec 2022",
+      duration: "28 Nov 2022 - 9 Dec 2022",
       tools: "Unity · C#",
     },
     sections: [
@@ -214,7 +314,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Player Movement",
         content:
-          "Players can perform several actions: walking, jumping, double jumping, wall jumping, and sliding off walls. Despite these capabilities, the game maintains a deliberate pace — rewarding careful movement and precise control to navigate obstacles effectively.",
+          "Players can perform several actions: walking, jumping, double jumping, wall jumping, and sliding off walls. Despite these capabilities, the game maintains a deliberate pace - rewarding careful movement and precise control to navigate obstacles effectively.",
       },
       {
         type: "code",
@@ -252,7 +352,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
     slug: "rollover",
     meta: {
       role: "Solo Developer",
-      duration: "13 Mar 2023 — 7 Apr 2023",
+      duration: "13 Mar 2023 - 7 Apr 2023",
       tools: "Unity · C#",
     },
     sections: [
@@ -260,7 +360,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "Rollover is a game about controlling multiple marbles — you guide them in sequence. Experience multiple levels and explore from platformer to adventure.",
+          "Rollover is a game about controlling multiple marbles - you guide them in sequence. Experience multiple levels and explore from platformer to adventure.",
       },
       {
         type: "text",

@@ -1,11 +1,12 @@
 import type { Project } from "@/types";
 
-// Google Sites CDN — these load externally from your old portfolio.
+// Google Sites CDN - these load externally from your old portfolio.
 // For production, download to /public/images/projects/ and update paths.
 export const IMG = {
   panic20: "/images/panic20/thumbnail.png",
   spaceFishing: "/images/space-fishing/thumbnail.png",
   landmass: "/images/landmass-generator/thumbnail.png",
+  syntaxHighlighting: "/images/syntax-highlighting/thumbnail.png",
   goopy: "/images/goopy/thumbnail.png",
   platformer: "/images/2d-platformer/thumbnail.png",
   rollover: "/images/rollover/thumbnail.png",
@@ -14,6 +15,21 @@ export const IMG = {
 
 export const PROJECTS: Project[] = [
   // ── Games ──────────────────────────────────────────────
+  {
+    id: "tmpl8-raytracer",
+    title: "Tmpl8 Ray Tracer",
+    slug: "tmpl8-raytracer",
+    description:
+      "A CPU-based voxel ray tracer built on the Tmpl8 framework featuring instanced rendering, 3D Conway's Game of Life simulation, MagicaVoxel integration, and screen-space post-processing.",
+    category: "game",
+    tags: ["C++", "Ray Tracing", "Voxels", "SIMD", "Tmpl8"],
+    thumbnail: "/images/tmpl8-raytracer/thumbnail.png",
+    year: 2025,
+    featured: true,
+    links: {
+      github: "https://github.com/ys4you/raytracking",
+    },
+  },
   {
     id: "panic20",
     title: "Panic 20",
@@ -34,7 +50,7 @@ export const PROJECTS: Project[] = [
     title: "Space Fishing",
     slug: "space-fishing",
     description:
-      "A cosmic fishing adventure — explore alien planets, cast your line into cosmic waters, fish for rare exotic species, and upgrade your equipment along the way.",
+      "A cosmic fishing adventure - explore alien planets, cast your line into cosmic waters, fish for rare exotic species, and upgrade your equipment along the way.",
     category: "game",
     tags: ["Unity", "C#", "Team", "FSM"],
     thumbnail: IMG.spaceFishing,
@@ -55,13 +71,27 @@ export const PROJECTS: Project[] = [
     year: 2023,
   },
 
+  // ── Software ─────────────────────────────────────────
+  {
+    id: "syntax-highlighting",
+    title: "Tree-sitter Parser & Syntax Highlighting",
+    slug: "syntax-highlighting",
+    description:
+      "VS Code extension providing syntax highlighting, code folding, and IntelliSense for MARIN's Extensible Modeling Framework (XMF) domain-specific language, built with Tree-sitter.",
+    category: "software",
+    tags: ["Tree-sitter", "JavaScript", "VS Code", "DSL", "Internship"],
+    thumbnail: IMG.syntaxHighlighting,
+    year: 2024,
+    featured: true,
+  },
+
   // ── Archived ───────────────────────────────────────────
   {
     id: "goopy",
     title: "Goopy",
     slug: "goopy",
     description:
-      "A cute 2.5D tower defense game with a twist — two mirrored grids await your strategic prowess. Defend your kingdom in perfect symmetry.",
+      "A cute 2.5D tower defense game with a twist - two mirrored grids await your strategic prowess. Defend your kingdom in perfect symmetry.",
     category: "game",
     tags: ["Unity", "C#", "Game Jam", "Team"],
     thumbnail: IMG.goopy,
@@ -96,5 +126,6 @@ export const PROJECTS: Project[] = [
 
 export const GAME_PROJECTS = PROJECTS.filter((p) => p.category === "game" && !p.archived);
 export const WEB_PROJECTS = PROJECTS.filter((p) => p.category === "web" && !p.archived);
+export const SOFTWARE_PROJECTS = PROJECTS.filter((p) => p.category === "software" && !p.archived);
 export const FEATURED_PROJECTS = PROJECTS.filter((p) => p.featured && !p.archived);
 export const ARCHIVED_PROJECTS = PROJECTS.filter((p) => p.archived);

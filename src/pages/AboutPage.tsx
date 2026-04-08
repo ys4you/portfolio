@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import PageHeader from "@/components/PageHeader";
 import GitHubActivity from "@/components/GitHubActivity";
 import DiscordPresence from "@/components/DiscordPresence";
 import { IMG } from "@/data/projects";
-import { Code2, Cpu, Globe, Wrench } from "lucide-react";
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -18,46 +19,13 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-const SKILL_GROUPS = [
-  {
-    icon: <Code2 size={22} />,
-    title: "Languages",
-    skills: ["C++", "TypeScript", "C#", "Python", "GLSL"],
-  },
-  {
-    icon: <Cpu size={22} />,
-    title: "Engine & Graphics",
-    skills: ["OpenGL", "Ray Tracing", "Voxel Systems", "SIMD", "Unreal Engine 5"],
-  },
-  {
-    icon: <Globe size={22} />,
-    title: "Web & Backend",
-    skills: ["React", "ASP.NET Core", "Node.js", "Vite", "Tailwind CSS"],
-  },
-  {
-    icon: <Wrench size={22} />,
-    title: "Tools & Workflow",
-    skills: ["Git", "CMake", "n8n", "Docker", "Visual Studio", "Linux"],
-  },
-];
-
-const TIMELINE = [
-  {
-    period: "2023 — Present",
-    title: "Game Development Student",
-    org: "Breda University of Applied Sciences",
-    description:
-      "Academy for Games and Media — focusing on C++ graphics programming, engine architecture, and cross-platform development.",
-    type: "education" as const,
-  },
-  {
-    period: "2024 — Present",
-    title: "Web Developer",
-    org: "JG Webmarketing",
-    description:
-      "Building internal tools (PBN Manager, RSS digest system), automation workflows with n8n, and full-stack applications.",
-    type: "work" as const,
-  },
+const INTERESTS = [
+  { emoji: "🎮", label: "Game engines from scratch" },
+  { emoji: "🧊", label: "Voxels & ray tracing" },
+  { emoji: "⚙️", label: "Tooling that saves people time" },
+  { emoji: "🌐", label: "Full-stack web apps" },
+  { emoji: "🔧", label: "Automation & workflows" },
+  { emoji: "📐", label: "Clean architecture" },
 ];
 
 export default function AboutPage() {
@@ -71,7 +39,7 @@ export default function AboutPage() {
         <PageHeader
           title="About me"
           accent="."
-          subtitle="Developer, builder, and student — driven by curiosity for how things work under the hood."
+          subtitle="The person behind the code."
         />
 
         {/* ── Bio ── */}
@@ -81,7 +49,6 @@ export default function AboutPage() {
           animate="show"
           className="mb-20 grid items-start gap-12 lg:grid-cols-5"
         >
-          {/* Photo placeholder */}
           <motion.div
             variants={fadeUp}
             className="aspect-[4/5] w-full overflow-hidden rounded-radius-card border border-border-subtle bg-surface lg:col-span-2"
@@ -99,27 +66,57 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                I'm a game development student at BUas in Breda, specializing in C++ and
-                graphics programming. I love going deep — whether that's implementing a
-                ray tracer from scratch, building voxel engines with chunk streaming, or
-                optimizing SIMD-heavy render loops.
+                Hello there! I'm Yesse, a{" "}
+                <span className="font-semibold text-text">
+                  {Math.floor(
+                    (Date.now() - new Date("2006-03-14").getTime()) /
+                      (365.25 * 24 * 60 * 60 * 1000)
+                  )}
+                </span>
+                -year-old developer with over{" "}
+                <span className="font-semibold text-text">
+                  {Math.floor(
+                    (Date.now() - new Date("2022-01-01").getTime()) /
+                      (365.25 * 24 * 60 * 60 * 1000)
+                  )}
+                </span>{" "}
+                years of experience writing code. Ever since I was a kid, I was someone
+                who liked to understand how things worked under the hood. That curiosity
+                led me to game development, where I love to create, design, and publish
+                my code and its creations.
               </p>
               <p>
-                Outside of game tech, I build full-stack web applications and internal
-                tooling for JG Webmarketing, working across React, TypeScript, C#, and
-                Python. I enjoy the entire spectrum from low-level performance work to
-                polished UI.
+                My journey started at{" "}
+                <a href="https://www.glu.nl/" target="_blank" rel="noopener noreferrer" className="font-medium text-text underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent">
+                  Grafisch Lyceum Utrecht
+                </a>
+                , where I finished my MBO 4
+                in just 3 years instead of 4. Purely because I couldn't wait to get to
+                the next challenge. This school also led me to my current job at{" "}
+                <a href="https://jgwebmarketing.nl/" target="_blank" rel="noopener noreferrer" className="font-medium text-text underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent">
+                  JG Webmarketing
+                </a>
+                , where I mainly create tools for the marketing side so their
+                workflow becomes easier. I also build new tools for our clients and help
+                out with marketing when the workload gets heavy.
               </p>
               <p>
-                When I'm not coding, you'll find me exploring game design concepts,
-                experimenting with neurofeedback software, or tinkering with automation
-                workflows.
+                Now I'm studying Creative Media and Game Technologies at{" "}
+                <a href="https://www.buas.nl/" target="_blank" rel="noopener noreferrer" className="font-medium text-text underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent">
+                  Breda University of Applied Sciences
+                </a>
+                , going deeper into C++ and engine development.
+              </p>
+              <p>
+                I like how much of a generalist I've become. One day I'm debugging a game
+                for school, and the next day I'm shipping a new React app. I don't want
+                to pick a lane. I want to build whatever needs building and do it well.
               </p>
             </div>
           </motion.div>
         </motion.div>
 
-        {/* ── Skills ── */}
+        {/* ── What drives me ── */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -127,34 +124,22 @@ export default function AboutPage() {
           className="mb-20"
         >
           <h2 className="mb-8 text-2xl font-bold md:text-3xl">
-            Skills &amp; tools<span className="text-accent">.</span>
+            What I'm into<span className="text-accent">.</span>
           </h2>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {SKILL_GROUPS.map((group) => (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {INTERESTS.map((item) => (
               <div
-                key={group.title}
-                className="rounded-radius-card border border-border-subtle bg-bg-elevated p-6"
+                key={item.label}
+                className="flex items-center gap-3 rounded-radius-card border border-border-subtle bg-bg-elevated p-4"
               >
-                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-radius-sm bg-accent-subtle text-accent">
-                  {group.icon}
-                </div>
-                <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-text-muted">
-                  {group.title}
-                </h3>
-                <ul className="space-y-1.5">
-                  {group.skills.map((skill) => (
-                    <li key={skill} className="text-sm text-text-secondary">
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
+                <span className="text-xl">{item.emoji}</span>
+                <span className="text-sm text-text-secondary">{item.label}</span>
               </div>
             ))}
           </div>
         </motion.div>
 
-        {/* ── GitHub Activity ── */}
+        {/* ── Activity ── */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -170,46 +155,25 @@ export default function AboutPage() {
           </div>
         </motion.div>
 
-        {/* ── Timeline ── */}
+        {/* ── CTA to Resume ── */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
+          className="rounded-radius-card border border-border-subtle bg-bg-elevated p-8 text-center"
         >
-          <h2 className="mb-8 text-2xl font-bold md:text-3xl">
-            Experience &amp; education<span className="text-accent">.</span>
+          <h2 className="mb-2 text-xl font-bold">
+            Want the formal version<span className="text-accent">?</span>
           </h2>
-
-          <div className="relative border-l-2 border-border-subtle pl-8">
-            {TIMELINE.map((entry, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="relative mb-10 last:mb-0"
-              >
-                {/* Dot */}
-                <div
-                  className={`absolute -left-[calc(2rem+5px)] top-1.5 h-3 w-3 rounded-full border-2 ${
-                    entry.type === "work"
-                      ? "border-accent bg-accent/30"
-                      : "border-text-muted bg-text-muted/30"
-                  }`}
-                />
-
-                <span className="mb-1 block font-mono text-xs tracking-wider text-text-muted uppercase">
-                  {entry.period}
-                </span>
-                <h3 className="text-lg font-bold">{entry.title}</h3>
-                <p className="text-sm font-medium text-accent">{entry.org}</p>
-                <p className="mt-2 text-sm text-text-secondary leading-relaxed">
-                  {entry.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+          <p className="mb-5 text-sm text-text-secondary">
+            Check out my resume for experience, education, and a full skills breakdown.
+          </p>
+          <Link
+            to="/resume"
+            className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover"
+          >
+            View Resume <ArrowRight size={14} />
+          </Link>
         </motion.div>
       </div>
     </section>

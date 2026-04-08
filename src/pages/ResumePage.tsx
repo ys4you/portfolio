@@ -17,33 +17,81 @@ const stagger = {
 
 const EXPERIENCE = [
   {
-    role: "Web Developer",
+    role: "Digital Growth Engineer",
     company: "JG Webmarketing",
-    period: "2024 — Present",
+    companyUrl: "https://jgwebmarketing.nl/",
+    period: "Jun 2024 - Present",
     bullets: [
-      "Built a full-stack PBN Manager with React/TypeScript + ASP.NET Core 8, supporting SQLite and MySQL",
-      "Developed n8n automation workflows for order processing, blog generation, and RSS email digests",
-      "Created a Google Apps Script pipeline for AI-generated SEO blog posts with Groq/Llama integration",
+      "Building internal tools, automation workflows with n8n, and full-stack web applications",
+      "Specializing in SEO tooling, linkbuilding systems, and digital growth solutions",
+      "Working with React, TypeScript, C#, ASP.NET Core, PHP, and various API integrations",
+    ],
+  },
+  {
+    role: "Language Tools / Software Developer",
+    company: "MARIN - Maritime Research Institute Netherlands (Internship)",
+    companyUrl: "https://www.marin.nl/",
+    period: "Aug 2024 - Jan 2025",
+    bullets: [
+      "Developed syntax highlighting, code folding, and IntelliSense for MARIN's domain-specific language (XMF)",
+      "Built a VS Code extension using Tree-sitter for parsing and tokenization",
+      "On-site role in Wageningen involving project management and DSL architecture",
+    ],
+  },
+  {
+    role: "Full-Stack Web Developer & Digital Solutions",
+    company: "JG Webmarketing (Internship)",
+    companyUrl: "https://jgwebmarketing.nl/",
+    period: "Jan 2024 - Jun 2024",
+    bullets: [
+      "Built internal tooling with C#, PHP, and web technologies",
+      "Developed automation pipelines and digital solutions to streamline workflows",
+      "First professional experience in full-stack web development",
+    ],
+  },
+  {
+    role: "Store Employee",
+    company: "Action, Wageningen",
+    period: "Jul 2021 - Aug 2024",
+    bullets: [
+      "Started working at age 15 while still in high school",
+      "Developed strong teamwork, communication, and problem-solving skills in a fast-paced retail environment",
+      "Quickly adapted to changing responsibilities and managed tasks efficiently",
     ],
   },
 ];
 
 const EDUCATION = [
   {
-    degree: "Game Development",
+    degree: "Bachelor's Creative Media and Game Technologies",
     school: "Breda University of Applied Sciences (BUas)",
-    period: "2023 — Present",
+    schoolUrl: "https://www.buas.nl/",
+    period: "2025 - 2029",
     description:
-      "Academy for Games and Media — specializing in C++ graphics programming, engine architecture, and cross-platform development.",
+      "Studying game development with a focus on C++ graphics programming, engine architecture, and cross-platform development.",
+  },
+  {
+    degree: "MBO 4 Software Development (Game Developer)",
+    school: "Grafisch Lyceum Utrecht",
+    schoolUrl: "https://www.glu.nl/",
+    period: "2022 - 2025",
+    description:
+      "Completed a 4-year program in 3 years. Gained proficiency in C# and OOP, game development with Unity, Scrum methodologies (Scrum Master role), and collaborative version control with Git.",
+  },
+  {
+    degree: "MAVO",
+    school: "Pantarijn, Rhenen",
+    period: "2018 - 2022",
+    description: "High school diploma.",
   },
 ];
 
 const TECH_SKILLS = [
-  { category: "Languages", items: "C++, TypeScript, C#, Python, GLSL" },
+  { category: "Languages", items: "C++, TypeScript, C#, Python, PHP, GLSL, JavaScript" },
   { category: "Graphics", items: "OpenGL, Ray Tracing, Voxel Systems, SIMD, Tmpl8" },
-  { category: "Web", items: "React, ASP.NET Core, Node.js, Vite, Tailwind CSS" },
-  { category: "Tools", items: "Git, CMake, n8n, Docker, Visual Studio, Linux" },
-  { category: "Game Engines", items: "Unreal Engine 5, Custom C++ Engines" },
+  { category: "Web", items: "React, ASP.NET Core, Node.js, Vite, Tailwind CSS, WordPress" },
+  { category: "Tools", items: "Git, CMake, n8n, Docker, Visual Studio, VS Code, Linux, Photoshop" },
+  { category: "Other", items: "Tree-sitter, SEO, Google Console, Azure, REST APIs, SMTP, Scrum" },
 ];
 
 export default function ResumePage() {
@@ -51,7 +99,7 @@ export default function ResumePage() {
     <section className="section-gap">
       <SEO
         title="Resume"
-        description="Experience, education, and technical skills of Yesse Seijnaeve — game and web developer."
+        description="Experience, education, and technical skills of Yesse Seijnaeve - game and web developer."
       />
       <div className="page-container max-w-4xl">
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -93,7 +141,18 @@ export default function ResumePage() {
                     <h3 className="text-lg font-bold">{job.role}</h3>
                     <span className="font-mono text-xs text-text-muted">{job.period}</span>
                   </div>
-                  <p className="mb-3 text-sm font-medium text-accent">{job.company}</p>
+                  {job.companyUrl ? (
+                    <a
+                      href={job.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mb-3 inline-block text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+                    >
+                      {job.company}
+                    </a>
+                  ) : (
+                    <p className="mb-3 text-sm font-medium text-accent">{job.company}</p>
+                  )}
                   <ul className="space-y-2">
                     {job.bullets.map((bullet, j) => (
                       <li key={j} className="flex gap-2 text-sm text-text-secondary">
@@ -126,7 +185,18 @@ export default function ResumePage() {
                     <h3 className="text-lg font-bold">{edu.degree}</h3>
                     <span className="font-mono text-xs text-text-muted">{edu.period}</span>
                   </div>
-                  <p className="mb-2 text-sm font-medium text-accent">{edu.school}</p>
+                  {edu.schoolUrl ? (
+                    <a
+                      href={edu.schoolUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mb-2 inline-block text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+                    >
+                      {edu.school}
+                    </a>
+                  ) : (
+                    <p className="mb-2 text-sm font-medium text-accent">{edu.school}</p>
+                  )}
                   <p className="text-sm text-text-secondary leading-relaxed">
                     {edu.description}
                   </p>

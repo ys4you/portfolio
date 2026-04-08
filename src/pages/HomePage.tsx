@@ -75,8 +75,8 @@ export default function HomePage() {
               variants={fadeUp}
               className="mx-auto mb-10 max-w-lg text-sm text-text-secondary md:text-base"
             >
-              Building games from scratch in C++ and shipping full-stack web
-              applications — from voxel engines to React dashboards.
+              Building games and shipping web applications. If it needs
+              building, I'll make it happen.
             </motion.p>
 
             {/* CTAs */}
@@ -115,7 +115,7 @@ export default function HomePage() {
               to="/projects/games"
               icon={<Gamepad2 size={28} />}
               title="Games"
-              description="From C++ ray tracers and voxel engines to rhythm roguelikes — performant, handcrafted experiences."
+              description="From C++ ray tracers and voxel engines to rhythm roguelikes - performant, handcrafted experiences."
             />
             <CategoryCard
               to="/projects/web"
@@ -181,15 +181,18 @@ export default function HomePage() {
                 A bit about me<span className="text-accent">.</span>
               </h2>
               <p className="mb-4 text-text-secondary leading-relaxed">
-                I'm Yesse — a game development student at BUas in Breda, specializing in
-                C++ and graphics programming. I build ray tracers and voxel engines from
-                scratch, and ship full-stack web tools that streamline real business
-                workflows at JG Webmarketing.
+                I'm Yesse - a game development student at{" "}
+                <a href="https://www.buas.nl/" target="_blank" rel="noopener noreferrer" className="font-medium text-text underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent">BUas</a>
+                {" "}studying Creative Media and Game Technologies, and a part-time Digital Growth Engineer at{" "}
+                <a href="https://jgwebmarketing.nl/" target="_blank" rel="noopener noreferrer" className="font-medium text-text underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent">JG Webmarketing</a>
+                . I completed my MBO at{" "}
+                <a href="https://www.glu.nl/" target="_blank" rel="noopener noreferrer" className="font-medium text-text underline decoration-accent/40 underline-offset-2 transition-colors hover:text-accent">GLU</a>
+                {" "}a year early.
               </p>
               <p className="mb-6 text-text-secondary leading-relaxed">
-                I thrive at the intersection of low-level performance and polished user
-                experience. Whether it's optimizing a SIMD render loop or designing a
-                React dashboard, I care about making things that work well and feel right.
+                I build C++ ray tracers and voxel engines from scratch, and ship
+                full-stack web tools that streamline real business workflows. I've also
+                built language tooling at MARIN using Tree-sitter.
               </p>
               <Link
                 to="/about"

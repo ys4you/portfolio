@@ -10,6 +10,7 @@ export const NAV_LINKS: NavLink[] = [
     children: [
       { label: "Games", href: "/projects/games" },
       { label: "Web", href: "/projects/web" },
+      { label: "Software", href: "/projects/software" },
     ],
   },
   { label: "About", href: "/about" },

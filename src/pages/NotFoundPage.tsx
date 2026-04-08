@@ -15,7 +15,7 @@ export default function NotFoundPage() {
             404
           </h1>
           <p className="mt-2 text-lg text-text-secondary">
-            This page doesn't exist — or maybe it wandered off.
+            This page doesn't exist - or maybe it wandered off.
           </p>
           <Link
             to="/"

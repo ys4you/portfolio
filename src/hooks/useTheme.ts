@@ -15,7 +15,7 @@ function getInitialTheme(): Theme {
   return "dark";
 }
 
-// Shared context — components import ThemeContext for Provider, useTheme for consuming
+// Shared context - components import ThemeContext for Provider, useTheme for consuming
 export const ThemeContext = createContext<ThemeContextValue>({
   theme: "dark",
   toggle: () => {},

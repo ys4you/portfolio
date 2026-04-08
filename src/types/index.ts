@@ -1,5 +1,5 @@
 /* ============================================
-   Portfolio — Shared Types
+   Portfolio - Shared Types
    ============================================ */
 
 export interface Project {
@@ -7,7 +7,7 @@ export interface Project {
   title: string;
   slug: string;
   description: string;
-  category: "game" | "web";
+  category: "game" | "web" | "software";
   tags: string[];
   thumbnail: string;
   links?: {
@@ -20,7 +20,7 @@ export interface Project {
   year: number;
 }
 
-/** Detail page content — array of sections rendered in order */
+/** Detail page content - array of sections rendered in order */
 export type ProjectSection =
   | { type: "text"; title?: string; content: string }
   | { type: "code"; title?: string; language: string; filename?: string; code: string }

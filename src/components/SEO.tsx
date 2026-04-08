@@ -10,7 +10,7 @@ interface SEOProps {
 
 const DEFAULTS = {
   siteName: "Yesse Seijnaeve",
-  title: "Yesse Seijnaeve — Game & Web Developer",
+  title: "Yesse Seijnaeve - Game & Web Developer",
   description:
     "Game development student and web developer building ray tracers, voxel engines, and full-stack web applications.",
   image: "/images/og-default.png",
@@ -29,7 +29,7 @@ export default function SEO({
   type = "website",
 }: SEOProps) {
   const fullTitle = title
-    ? `${title} — ${DEFAULTS.siteName}`
+    ? `${title} - ${DEFAULTS.siteName}`
     : DEFAULTS.title;
   const metaDescription = description || DEFAULTS.description;
   const metaImage = image || DEFAULTS.image;

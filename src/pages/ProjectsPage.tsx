@@ -6,7 +6,7 @@ import BentoGrid from "@/components/BentoGrid";
 import ProjectCard from "@/components/ProjectCard";
 import { PROJECTS } from "@/data/projects";
 
-type CategoryFilter = "all" | "game" | "web" | "archive";
+type CategoryFilter = "all" | "game" | "web" | "software" | "archive";
 
 export default function ProjectsPage() {
   const [category, setCategory] = useState<CategoryFilter>("all");
@@ -72,7 +72,7 @@ export default function ProjectsPage() {
 
         {/* Category filter */}
         <div className="mb-4 flex flex-wrap gap-2">
-          {(["all", "game", "web"] as const).map((f) => (
+          {(["all", "game", "web", "software"] as const).map((f) => (
             <button
               key={f}
               onClick={() => handleCategoryChange(f)}
@@ -82,7 +82,7 @@ export default function ProjectsPage() {
                   : "border border-border-subtle text-text-secondary hover:text-text"
               }`}
             >
-              {f === "all" ? "All" : f === "game" ? "Games" : "Web"}
+              {f === "all" ? "All" : f === "game" ? "Games" : f === "web" ? "Web" : "Software"}
             </button>
           ))}
 

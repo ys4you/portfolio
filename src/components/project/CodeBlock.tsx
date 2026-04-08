@@ -7,7 +7,7 @@ import { useTheme } from "@/hooks/useTheme";
 (typeof globalThis !== "undefined" ? globalThis : window).Prism = Prism;
 
 async function loadLanguages() {
-  // @ts-expect-error — dynamic import of Prism language grammars
+  // @ts-expect-error - dynamic import of Prism language grammars
   await import("prismjs/components/prism-csharp");
   // @ts-expect-error
   await import("prismjs/components/prism-cpp");
@@ -21,7 +21,7 @@ async function loadLanguages() {
   await import("prismjs/components/prism-sql");
   // @ts-expect-error
   await import("prismjs/components/prism-json");
-  // PHP requires markup-templating which requires markup — load in order
+  // PHP requires markup-templating which requires markup - load in order
   // @ts-expect-error
   await import("prismjs/components/prism-markup-templating");
   // @ts-expect-error
