@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { X, Archive } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import SEO from "@/components/SEO";
 import PageHeader from "@/components/PageHeader";
 import BentoGrid from "@/components/BentoGrid";
@@ -146,61 +147,104 @@ export default function ProjectsPage() {
             .filter((g) => g.visible.length > 0)
             .sort((a, b) => a.visible.length - b.visible.length)
             .map((group) => (
-              <div key={group.label} className="flex flex-wrap items-center gap-2">
+              <motion.div
+                key={group.label}
+                layout
+                className="flex flex-wrap items-center gap-2"
+              >
                 <span className="w-20 shrink-0 text-[11px] font-bold uppercase tracking-wider text-text-muted">
                   {group.label}
                 </span>
-                {group.visible.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => toggleTag(tag)}
-                    className={`rounded-radius-pill px-3 py-1 text-xs font-medium transition-colors ${
-                      activeTags.has(tag)
-                        ? "bg-accent/15 text-accent border border-accent/30"
-                        : "border border-border-subtle text-text-muted hover:text-text-secondary hover:border-border"
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
+                <AnimatePresence>
+                  {group.visible.map((tag) => (
+                    <motion.button
+                      key={tag}
+                      layout
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.85 }}
+                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                      onClick={() => toggleTag(tag)}
+                      className={`rounded-radius-pill px-3 py-1 text-xs font-medium transition-colors ${
+                        activeTags.has(tag)
+                          ? "bg-accent/15 text-accent border border-accent/30"
+                          : "border border-border-subtle text-text-muted hover:text-text-secondary hover:border-border"
+                      }`}
+                    >
+                      {tag}
+                    </motion.button>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
             ))}
 
-          {activeTags.size > 0 && (
-            <div className="flex items-center gap-2 pt-1">
-              <span className="w-20 shrink-0" />
-              <button
-                onClick={clearTags}
-                className="inline-flex items-center gap-1 rounded-radius-pill px-3 py-1 text-xs font-medium text-text-muted transition-colors hover:text-accent"
+          <AnimatePresence>
+            {activeTags.size > 0 && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2 overflow-hidden pt-1"
               >
-                <X size={12} /> Clear all filters
-              </button>
-            </div>
-          )}
+                <span className="w-20 shrink-0" />
+                <button
+                  onClick={clearTags}
+                  className="inline-flex items-center gap-1 rounded-radius-pill px-3 py-1 text-xs font-medium text-text-muted transition-colors hover:text-accent"
+                >
+                  <X size={12} /> Clear all filters
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Results */}
-        {filtered.length > 0 ? (
-          isArchive ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((project, i) => (
-                <ProjectCard key={project.id} project={project} index={i} />
-              ))}
-            </div>
+        <AnimatePresence mode="wait">
+          {filtered.length > 0 ? (
+            isArchive ? (
+              <motion.div
+                key={`archive-${activeTags.size}-${category}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {filtered.map((project, i) => (
+                  <ProjectCard key={project.id} project={project} index={i} />
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                key={`grid-${activeTags.size}-${category}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <BentoGrid projects={filtered} />
+              </motion.div>
+            )
           ) : (
-            <BentoGrid projects={filtered} />
-          )
-        ) : (
-          <div className="py-20 text-center">
-            <p className="text-text-muted">No projects match these filters.</p>
-            <button
-              onClick={clearTags}
-              className="mt-2 text-sm text-accent transition-colors hover:text-accent-hover"
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3 }}
+              className="py-20 text-center"
             >
-              Clear filters
-            </button>
-          </div>
-        )}
+              <p className="text-text-muted">No projects match these filters.</p>
+              <button
+                onClick={clearTags}
+                className="mt-2 text-sm text-accent transition-colors hover:text-accent-hover"
+              >
+                Clear filters
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
