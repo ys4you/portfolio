@@ -163,16 +163,23 @@ export default function ProjectDetailPage() {
 
         {/* Content sections */}
         {detail?.sections && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5, ease: EASE }}
-            className="border-t border-border-subtle pt-8"
-          >
+          <div className="border-t border-border-subtle pt-8">
             {detail.sections.map((section, i) => (
-              <SectionRenderer key={i} section={section} />
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: i === 0 ? 0.1 : 0,
+                  ease: EASE,
+                }}
+              >
+                <SectionRenderer section={section} />
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
         )}
 
         {/* Bottom nav */}
