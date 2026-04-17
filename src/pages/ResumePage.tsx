@@ -115,7 +115,7 @@ export default function ResumePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="mb-12 inline-flex items-center gap-2 rounded-radius-pill border border-border px-5 py-2.5 text-sm font-semibold text-text transition-colors hover:border-accent hover:text-accent md:mb-16"
+            className="mb-12 inline-flex items-center gap-2 rounded-radius-pill border border-border px-5 py-2.5 text-sm font-semibold text-text transition-all hover:border-accent hover:text-accent hover:scale-[1.03] active:scale-[0.97] md:mb-16"
           >
             <Download size={15} /> Download PDF
           </motion.a>

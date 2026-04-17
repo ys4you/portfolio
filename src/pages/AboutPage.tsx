@@ -170,7 +170,7 @@ export default function AboutPage() {
           </p>
           <Link
             to="/resume"
-            className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover"
+            className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-all hover:bg-accent-hover hover:scale-[1.03] active:scale-[0.97]"
           >
             View Resume <ArrowRight size={14} />
           </Link>

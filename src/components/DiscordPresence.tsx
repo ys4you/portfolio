@@ -176,7 +176,7 @@ export default function DiscordPresence() {
           href={`https://discord.com/users/${DISCORD_USER_ID}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-radius-pill bg-[#5865F2] px-4 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-1.5 rounded-radius-pill bg-[#5865F2] px-4 py-1.5 text-xs font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.05] active:scale-[0.95]"
         >
           <UserPlus size={13} /> Add Friend
         </a>

@@ -85,13 +85,13 @@ export default function HomePage() {
             <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
               <Link
                 to="/projects"
-                className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover"
+                className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-all hover:bg-accent-hover hover:scale-[1.03] active:scale-[0.97]"
               >
                 View Projects <ArrowRight size={16} />
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-radius-pill border border-border px-6 py-3 text-sm font-semibold text-text transition-colors hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 rounded-radius-pill border border-border px-6 py-3 text-sm font-semibold text-text transition-all hover:border-accent hover:text-accent hover:scale-[1.03] active:scale-[0.97]"
               >
                 Get in Touch
               </Link>
@@ -199,7 +199,8 @@ export default function HomePage() {
               </p>
               <p className="mb-6 text-text-secondary leading-relaxed">
                 I like building things from scratch - whether that's a game, a
-                web app, or a tool that makes someone's workflow easier.
+                web app, or a tool that makes someone's workflow easier. I also
+                built developer tools at MARIN during my internship.
               </p>
               <Link
                 to="/about"

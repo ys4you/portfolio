@@ -287,7 +287,7 @@ export default function ContactPage() {
                     type="button"
                     onClick={handleSubmit}
                     disabled={submitting}
-                    className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-colors hover:bg-accent-hover disabled:opacity-50"
+                    className="inline-flex items-center gap-2 rounded-radius-pill bg-accent px-6 py-3 text-sm font-semibold text-bg transition-all hover:bg-accent-hover hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50"
                   >
                     {submitting ? "Sending..." : "Send message"} <Send size={14} />
                   </button>
