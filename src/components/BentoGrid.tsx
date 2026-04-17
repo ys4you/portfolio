@@ -55,35 +55,36 @@ export default function BentoGrid({ projects }: BentoGridProps) {
     );
   }
 
-  let globalIndex = 0;
-
   return (
     <div className="space-y-6">
-      {rows.map((row, rowIdx) => (
-        <div key={rowIdx} className="space-y-6">
-          {/* Large featured card */}
-          {row.large && (
-            <ProjectCard
-              project={row.large}
-              index={globalIndex++}
-              size="large"
-            />
-          )}
+      {rows.map((row, rowIdx) => {
+        let rowIndex = 0;
+        return (
+          <div key={rowIdx} className="space-y-6">
+            {/* Large featured card */}
+            {row.large && (
+              <ProjectCard
+                project={row.large}
+                index={0}
+                size="large"
+              />
+            )}
 
-          {/* Small cards row */}
-          {row.small.length > 0 && (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {row.small.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={globalIndex++}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      ))}
+            {/* Small cards row */}
+            {row.small.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {row.small.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    index={rowIndex++}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
