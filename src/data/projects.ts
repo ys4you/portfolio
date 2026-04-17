@@ -22,7 +22,7 @@ export const PROJECTS: Project[] = [
     title: "CPU Ray Tracer",
     slug: "tmpl8-raytracer",
     description:
-      "A CPU-based voxel ray tracer built on the Tmpl8 framework featuring instanced rendering, 3D Conway's Game of Life simulation, MagicaVoxel integration, and screen-space post-processing.",
+      "A voxel ray tracer I built from scratch in C++ for school. Features instanced rendering, a 3D Game of Life simulation, and MagicaVoxel scene support.",
     category: "game",
     tags: ["C++", "School", "Ray Tracing", "Voxels", "SIMD", "Tmpl8"],
     thumbnail: "/images/tmpl8-raytracer/thumbnail.png",
@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     title: "Panic 20",
     slug: "panic20",
     description:
-      "A lightning-fast micro game where you dodge incoming objects and survive for as long as you can in an adrenaline-pumping 20-second challenge.",
+      "My first ever school project - a simple dodge game where you try to survive 20 seconds. Built with only 3 weeks of C# knowledge.",
     category: "game",
     tags: ["C#", "School", "Canvas Engine"],
     thumbnail: IMG.panic20,
@@ -52,7 +52,7 @@ export const PROJECTS: Project[] = [
     title: "Space Fishing",
     slug: "space-fishing",
     description:
-      "A cosmic fishing adventure - explore alien planets, cast your line into cosmic waters, fish for rare exotic species, and upgrade your equipment along the way.",
+      "A fishing game set in space. Explore alien planets, catch weird fish, and upgrade your gear. Built with a team of 6 as our first published game.",
     category: "game",
     tags: ["C#", "School", "Unity", "FSM"],
     thumbnail: IMG.spaceFishing,
@@ -67,7 +67,7 @@ export const PROJECTS: Project[] = [
     title: "Landmass Generator",
     slug: "landmass-generator",
     description:
-      "Procedural terrain generator using Perlin noise to create natural-looking landscapes with smooth elevation maps, built for game development and world-building.",
+      "A terrain generator that uses Perlin noise to create infinite landscapes. Built in Unity as an exam project to push my skills further.",
     category: "game",
     tags: ["C#", "School", "Unity", "Procedural Generation"],
     thumbnail: IMG.landmass,
@@ -76,11 +76,22 @@ export const PROJECTS: Project[] = [
 
   // ── Software ─────────────────────────────────────────
   {
+    id: "database-tool",
+    title: "Blog Database & API",
+    slug: "database-tool",
+    description:
+      "A blog management tool I built during my internship. PHP backend with a single API endpoint, MySQL database, token auth, and activity logging.",
+    category: "web",
+    tags: ["PHP", "Internship", "MySQL", "JavaScript"],
+    thumbnail: "/images/database-tool/thumbnail.png",
+    year: 2024,
+  },
+  {
     id: "syntax-highlighting",
     title: "Tree-sitter Parser & Syntax Highlighting",
     slug: "syntax-highlighting",
     description:
-      "VS Code extension providing syntax highlighting, code folding, and IntelliSense for MARIN's Extensible Modeling Framework (XMF) domain-specific language, built with Tree-sitter.",
+      "A VS Code extension I built during my internship at MARIN. Adds syntax highlighting, code folding, and IntelliSense for their in-house programming language.",
     category: "software",
     tags: ["JavaScript", "Internship", "Tree-sitter", "VS Code", "DSL"],
     thumbnail: IMG.syntaxHighlighting,
@@ -94,7 +105,7 @@ export const PROJECTS: Project[] = [
     title: "Goopy",
     slug: "goopy",
     description:
-      "A cute 2.5D tower defense game with a twist - two mirrored grids await your strategic prowess. Defend your kingdom in perfect symmetry.",
+      "A 2.5D tower defense game we made in a 72-hour game jam. I was the only developer - two mirrored grids, Plants vs Zombies style.",
     category: "game",
     tags: ["C#", "School", "Unity", "Game Jam"],
     thumbnail: IMG.goopy,
@@ -106,7 +117,7 @@ export const PROJECTS: Project[] = [
     title: "2D Platformer",
     slug: "2d-platformer",
     description:
-      "A classic 2D Unity platformer with agile movement and precision jumps across three intense levels of obstacles.",
+      "A 2D platformer I built in two weeks. Three levels, wall jumps, double jumps, and a lot of precision required to finish.",
     category: "game",
     tags: ["C#", "School", "Unity"],
     thumbnail: IMG.platformer,
@@ -118,7 +129,7 @@ export const PROJECTS: Project[] = [
     title: "Rollover: Marble Mayhem",
     slug: "rollover",
     description:
-      "Guide multiple marbles simultaneously to solve levels and discover secrets in this solo-teamwork puzzle adventure.",
+      "A puzzle game where you control multiple marbles one at a time. Get them all to the right spots to complete each level.",
     category: "game",
     tags: ["C#", "School", "Unity"],
     thumbnail: IMG.rollover,

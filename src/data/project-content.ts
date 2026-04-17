@@ -23,7 +23,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "A CPU-based voxel ray tracer built from scratch on the Tmpl8 framework as part of my studies at BUas. The project focuses on real-time rendering of voxel scenes with support for instanced geometry, dynamic lighting, and post-processing effects.",
+          "A voxel ray tracer I'm building from scratch in C++ as part of my studies at BUas. It renders voxel scenes in real-time with instanced geometry, dynamic lights, and some post-processing on top.",
       },
       {
         type: "video",
@@ -34,7 +34,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Voxel Rendering & Instancing",
         content:
-          "The renderer supports MagicaVoxel .vox scene imports and uses a two-level acceleration structure (TLAS/BLAS) with brickmaps for efficient ray traversal. Instanced voxel cubes allow rendering complex scenes like a 3D Conway's Game of Life simulation without duplicating geometry data.",
+          "It can load MagicaVoxel .vox scenes and uses a two-level acceleration structure (TLAS/BLAS) with brickmaps to keep ray traversal fast. Instancing means I can render tons of voxel cubes - like a 3D Game of Life - without copying all the geometry data.",
       },
       {
         type: "code-remote",
@@ -46,7 +46,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "3D Conway's Game of Life",
         content:
-          "One of the showcase scenes is a 3D Game of Life running on the grid. I experimented with stable 3D rulesets like Coral, Growth, and Sprawl to find visually interesting patterns that evolve over time. Each alive cell is rendered as an instanced voxel cube.",
+          "One of the cooler scenes is a 3D Game of Life. I tried a bunch of different 3D rulesets (Coral, Growth, Sprawl) to find ones that look interesting as they evolve. Each living cell is just an instanced voxel cube.",
       },
       {
         type: "code-remote",
@@ -58,7 +58,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Renderer & Scene Management",
         content:
-          "The scene system uses a SceneManager that handles transitions, camera state, and event playback. Multiple scenes (GyroscopeScene, HelixScene, InfinityMirrorScene, OrbitCloudScene, etc.) can be switched at runtime through the ImGui interface.",
+          "I built a scene system with a SceneManager that handles transitions and camera state. There are a bunch of different scenes (Gyroscope, Helix, InfinityMirror, OrbitCloud, etc.) and you can switch between them at runtime through ImGui.",
       },
       {
         type: "code-remote",
@@ -70,7 +70,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Performance",
         content:
-          "Performance optimization was a major focus. The FindNearest and IsOccluded functions were profiled and optimized with SIMD intrinsics. The brickmap acceleration structure significantly reduced ray traversal time compared to naive voxel intersection.",
+          "Performance was a big focus. I profiled the hot paths (FindNearest, IsOccluded) and optimized them with SIMD. The brickmap structure made a huge difference compared to just checking every voxel.",
       },
     ],
   },
@@ -94,13 +94,13 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "In my first school project, I set out on a creative journey with just three weeks of C# and OOP basics under my belt. 'Panic20' was born - a microgame where players roam freely and dodge obstacles. This project epitomizes my early programming prowess and ability to seize creative freedom, even as a beginner, setting the tone for my journey into game development.",
+          "This was literally my first school project ever. I had about 3 weeks of C# under my belt and just went for it. Panic20 is a simple dodge game - you move around and try not to get hit for 20 seconds. Nothing crazy, but it's where it all started.",
       },
       {
         type: "text",
         title: "Spawning Bones",
         content:
-          'Creating bones presented a captivating challenge. I aimed to design two types: shorter ones and longer ones. To achieve this, I created two classes - "Bone" and "BoneShort."\n\nWithin these classes, I seamlessly combined a Bitmap with a rectangular frame to animate the bones gracefully. Additionally, I implemented an efficient AABB collision detection system within the level. This system accurately determined if the player had entered the bone zones, deducting their health as a consequence.',
+          'I made two types of bones as obstacles - long and short ones. Each bone class combines a sprite with a hitbox and gets animated using a rectangular frame.\n\nFor collision I used AABB detection - when the player walks into a bone zone, they lose health. Simple but it works.',
       },
       {
         type: "code-remote",
@@ -132,7 +132,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "Space Fishing was a team project where we had 8 weeks to plan, build, and publish a game. Our team of six created a cosmic fishing adventure where players explore alien planets, catch exotic species, and upgrade their equipment. We won best itch.io page of the year for our cohort.",
+          "This was our first published game as a team. We had 8 weeks with 6 people to plan, build, and ship something. We ended up winning best itch.io page of the year in our class, which was pretty cool.",
       },
       {
         type: "text",
@@ -222,7 +222,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "This assignment was part of my exam called 'Software Deepening.' I had the freedom to choose a topic in which I wanted to improve. Since I skipped the second year of my studies, I chose to enhance my skills in Unity by using a complex algorithm to generate landmasses.",
+          "This was my exam project for 'Software Deepening.' I got to pick what I wanted to learn, and since I skipped second year, I wanted to challenge myself with something harder. So I went with procedural terrain generation in Unity.",
       },
       {
         type: "text",
@@ -245,6 +245,43 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
     ],
   },
 
+  // ── Blog Database & API ───────────────────────────────
+  {
+    slug: "database-tool",
+    meta: {
+      role: "Backend Developer",
+      team: ["Coen (Frontend)", "Yesse (Backend & Frontend Assistance)"],
+      duration: "29 Jan 2024 - 19 Apr 2024",
+      tools: "PHP · MySQL · JavaScript · HTML/CSS · XAMPP",
+    },
+    sections: [
+      {
+        type: "text",
+        title: "Introduction",
+        content:
+          "My first real backend project. I set up a XAMPP server and built the whole API around a single endpoint - /api.php. You just send a JSON payload with an \"action\" field and it does the thing. Kept it simple so anyone on the team could use it.",
+      },
+      {
+        type: "text",
+        title: "User Authentication",
+        content:
+          "Login gives you a token that gets saved in localStorage and the database. Every API call checks that token to make sure it's actually you. If you're afk for 10 minutes or log out, the token gets wiped and you're back at the login screen.",
+      },
+      {
+        type: "text",
+        title: "Blog & Styling System",
+        content:
+          "The database has 3 tables linked to blogs: \"Websites\", \"Styling\", and \"WebsiteStyling\". The Websites table contains the blog data. The Styling table holds boolean values tracking what styling tasks are complete. WebsiteStyling is a junction table linking websites to their styling progress, making it quick to look up the styling status of any website.",
+      },
+      {
+        type: "text",
+        title: "Activity Logging",
+        content:
+          "Everything important gets logged - creating users, deleting blogs, posting to websites. It all goes into an Activitylog table with timestamps so you can see who did what and when.",
+      },
+    ],
+  },
+
   // ── Syntax Highlighting ──────────────────────────────
   {
     slug: "syntax-highlighting",
@@ -258,19 +295,19 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "During my internship at the Maritime Research Institute Netherlands (MARIN), I was assigned the task of implementing syntax highlighting for their Extensible Modeling Framework (XMF).\n\nTo achieve this, I used Tree-sitter, a parser generation tool developed by GitHub. With Tree-sitter, I created a Visual Studio Code extension to enhance the readability of XMF code.\n\nThe project was divided into two parts: building the parser with Tree-sitter, and building the VS Code extension to display the colors.",
+          "During my internship at MARIN, I had to build syntax highlighting for their in-house programming language called XMF.\n\nI used Tree-sitter (a parser tool made by GitHub) to parse the language, then built a VS Code extension on top of it. The project had two main parts: making the parser understand XMF, and making VS Code actually show the colors.",
       },
       {
         type: "text",
         title: "Tree-sitter Parser",
         content:
-          "The Tree-sitter implementation was written in JavaScript, which includes a domain-specific language (DSL) for defining dynamic tokens.\n\nThe parser processes source code and can detect errors like missing semicolons. If you want to learn more about Tree-sitter, I recommend reading the official documentation at tree-sitter.github.io.",
+          "The parser is written in JavaScript using Tree-sitter's DSL for defining tokens and grammar rules. It can parse XMF source code and catch errors like missing semicolons.",
       },
       {
         type: "text",
         title: "VS Code Extension",
         content:
-          "For the extension part, I needed to use the Tree-sitter parser to analyze the source code being edited in Visual Studio Code. The extension hooks into VS Code's extension API to provide real-time syntax highlighting, code folding, and IntelliSense features for XMF files.",
+          "For the VS Code side, I hooked the Tree-sitter parser into the extension API so it analyzes your code as you type. It gives you syntax highlighting, code folding, and basic IntelliSense - all in real time.",
       },
     ],
   },
@@ -291,13 +328,13 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "My Role",
         content:
-          'In a high-pressure 72-hour game jam, I served as the solo developer - managing scene creation, script development, and post-jam bug fixes. Despite the challenges, I successfully delivered a polished and functional game.\n\nI invite you to explore "Goopy," our 2.5D tower defense game reminiscent of the beloved Plants vs. Zombies series.',
+          "72-hour game jam, and I was the only developer on the team. Built all the scenes, wrote all the scripts, and fixed bugs after the jam ended. It's a 2.5D tower defense game, kind of like Plants vs. Zombies but with mirrored grids.",
       },
       {
         type: "text",
         title: "Grid & Object Instantiation",
         content:
-          "Originally assigned to another developer, I assumed responsibility for a crucial script during the game jam. This script played a pivotal role in creating grids, managing unit placement, and instantiating mirrored grids within the game world.",
+          "The grid system was originally supposed to be someone else's job, but I ended up taking it over during the jam. It handles creating the grids, placing units, and mirroring everything to the second grid.",
       },
       {
         type: "code",
@@ -357,13 +394,13 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Introduction",
         content:
-          "The 2D platformer I crafted focuses on surmounting a series of demanding challenges across three distinct levels. The aim is to successfully maneuver through each level and reach the finish line while avoiding any interruptions. I completed the development within a two-week period.",
+          "A platformer I built in about two weeks. Three levels, each one harder than the last. You just need to get to the end without dying.",
       },
       {
         type: "text",
         title: "Player Movement",
         content:
-          "Players can perform several actions: walking, jumping, double jumping, wall jumping, and sliding off walls. Despite these capabilities, the game maintains a deliberate pace - rewarding careful movement and precise control to navigate obstacles effectively.",
+          "The player can walk, jump, double jump, wall jump, and slide off walls. Sounds like a lot of movement options, but the levels are designed so you actually need all of them to get through.",
       },
       {
         type: "code",
@@ -415,7 +452,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         type: "text",
         title: "Leaderboard System",
         content:
-          'The "FinishRequirements" script checks for level completion by confirming that all marbles are on buttons. If successful, it marks the level as complete, updates personal best times, and returns players to the lobby.',
+          '"The FinishRequirements script checks if all marbles are sitting on their buttons. If they are, it marks the level as done, saves your best time, and sends you back to the lobby."',
       },
       {
         type: "code",

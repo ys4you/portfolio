@@ -12,7 +12,7 @@ type CategoryFilter = "all" | "game" | "web" | "software" | "archive";
 const TAG_GROUPS: { label: string; tags: string[] }[] = [
   {
     label: "Language",
-    tags: ["C#", "C++", "JavaScript"],
+    tags: ["C#", "C++", "JavaScript", "PHP"],
   },
   {
     label: "Context",
@@ -32,6 +32,7 @@ const TAG_GROUPS: { label: string; tags: string[] }[] = [
       "Tree-sitter",
       "VS Code",
       "DSL",
+      "MySQL",
       "Game Jam",
     ],
   },
@@ -86,7 +87,7 @@ export default function ProjectsPage() {
     <section className="section-gap">
       <SEO
         title="Projects"
-        description="A selection of games, tools, and applications built by Yesse Seijnaeve."
+        description="Games, tools, and web apps I've built over the years."
       />
       <div className="page-container">
         <PageHeader
@@ -135,19 +136,21 @@ export default function ProjectsPage() {
           </button>
         </div>
 
-        {/* Grouped tag filters */}
+        {/* Grouped tag filters - sorted shortest row first */}
         <div className="mb-10 space-y-3">
-          {TAG_GROUPS.map((group) => {
-            // Only show tags that exist in the current pool
-            const visibleTags = group.tags.filter((t) => availableTags.has(t));
-            if (visibleTags.length === 0) return null;
-
-            return (
+          {TAG_GROUPS
+            .map((group) => ({
+              ...group,
+              visible: group.tags.filter((t) => availableTags.has(t)),
+            }))
+            .filter((g) => g.visible.length > 0)
+            .sort((a, b) => a.visible.length - b.visible.length)
+            .map((group) => (
               <div key={group.label} className="flex flex-wrap items-center gap-2">
                 <span className="w-20 shrink-0 text-[11px] font-bold uppercase tracking-wider text-text-muted">
                   {group.label}
                 </span>
-                {visibleTags.map((tag) => (
+                {group.visible.map((tag) => (
                   <button
                     key={tag}
                     onClick={() => toggleTag(tag)}
@@ -161,8 +164,7 @@ export default function ProjectsPage() {
                   </button>
                 ))}
               </div>
-            );
-          })}
+            ))}
 
           {activeTags.size > 0 && (
             <div className="flex items-center gap-2 pt-1">

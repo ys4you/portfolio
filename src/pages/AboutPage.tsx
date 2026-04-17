@@ -20,12 +20,12 @@ const stagger = {
 };
 
 const INTERESTS = [
-  { emoji: "🎮", label: "Game engines from scratch" },
-  { emoji: "🧊", label: "Voxels & ray tracing" },
-  { emoji: "⚙️", label: "Tooling that saves people time" },
-  { emoji: "🌐", label: "Full-stack web apps" },
-  { emoji: "🔧", label: "Automation & workflows" },
-  { emoji: "📐", label: "Clean architecture" },
+  { emoji: "🎮", label: "Building game engines" },
+  { emoji: "🧠", label: "Learning new tech fast" },
+  { emoji: "⚙️", label: "Making tools that save time" },
+  { emoji: "🌐", label: "Web apps & dashboards" },
+  { emoji: "🔧", label: "Automating boring stuff" },
+  { emoji: "📐", label: "Writing clean code" },
 ];
 
 export default function AboutPage() {
@@ -33,7 +33,7 @@ export default function AboutPage() {
     <section className="section-gap">
       <SEO
         title="About"
-        description="Game development student at BUas and web developer at JG Webmarketing. Building ray tracers, voxel engines, and full-stack tools."
+        description="Game dev student and web developer. Building games and shipping web apps."
       />
       <div className="page-container">
         <PageHeader
@@ -166,7 +166,7 @@ export default function AboutPage() {
             Want the formal version<span className="text-accent">?</span>
           </h2>
           <p className="mb-5 text-sm text-text-secondary">
-            Check out my resume for experience, education, and a full skills breakdown.
+            My resume has all the details - experience, education, and skills.
           </p>
           <Link
             to="/resume"

@@ -139,13 +139,13 @@ export default function ContactPage() {
     <section className="section-gap">
       <SEO
         title="Contact"
-        description="Get in touch with Yesse Seijnaeve for collaboration, freelance work, or just to say hi."
+        description="Want to work together or just say hi? Reach out here."
       />
       <div className="page-container">
         <PageHeader
           title="Get in touch"
           accent="."
-          subtitle="Have a question, want to collaborate, or just want to say hi? I'd love to hear from you."
+          subtitle="Got a question or want to work on something together? Let me know."
         />
 
         <motion.div
@@ -194,8 +194,8 @@ export default function ContactPage() {
 
             <div className="mt-10 rounded-radius-card border border-border-subtle bg-bg-elevated p-5">
               <p className="text-sm text-text-secondary leading-relaxed">
-                I'm currently open to freelance work, internships, and collaboration on
-                interesting game or web projects. Don't hesitate to reach out!
+                I'm always down to work on cool projects. Whether it's a game, a web app,
+                or something completely different - just hit me up!
               </p>
             </div>
           </motion.div>

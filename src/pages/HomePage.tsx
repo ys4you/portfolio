@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Gamepad2, Globe } from "lucide-react";
+import { ArrowRight, Gamepad2, Globe, Code2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import HeroBackground from "@/components/HeroBackground";
 import Typewriter from "@/components/Typewriter";
@@ -38,8 +38,10 @@ export default function HomePage() {
               className="mb-8 flex items-center justify-center gap-8 font-mono text-xs tracking-widest uppercase"
             >
               <span className="text-accent/60">Games</span>
-              <span className="h-px w-8 bg-border" />
+              <span className="h-px w-6 bg-border" />
               <span className="text-accent/60">Web</span>
+              <span className="h-px w-6 bg-border" />
+              <span className="text-accent/60">Software</span>
             </motion.div>
 
             {/* Profile photo */}
@@ -110,18 +112,24 @@ export default function HomePage() {
             What I build<span className="text-accent">.</span>
           </motion.h2>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             <CategoryCard
               to="/projects/games"
               icon={<Gamepad2 size={28} />}
               title="Games"
-              description="From C++ ray tracers and voxel engines to rhythm roguelikes - performant, handcrafted experiences."
+              description="Games I've built during school - Unity projects, C++ engines, and game jam entries."
             />
             <CategoryCard
               to="/projects/web"
               icon={<Globe size={28} />}
               title="Web"
-              description="Full-stack applications, internal tooling, and automation workflows built with modern frameworks."
+              description="Web apps and tools I've built at work - dashboards, APIs, and things that make people's jobs easier."
+            />
+            <CategoryCard
+              to="/projects/software"
+              icon={<Code2 size={28} />}
+              title="Software"
+              description="Developer tools and internal software - VS Code extensions, parsers, and things that help other devs."
             />
           </div>
         </div>
@@ -190,9 +198,8 @@ export default function HomePage() {
                 {" "}a year early.
               </p>
               <p className="mb-6 text-text-secondary leading-relaxed">
-                I build C++ ray tracers and voxel engines from scratch, and ship
-                full-stack web tools that streamline real business workflows. I've also
-                built language tooling at MARIN using Tree-sitter.
+                I like building things from scratch - whether that's a game, a
+                web app, or a tool that makes someone's workflow easier.
               </p>
               <Link
                 to="/about"

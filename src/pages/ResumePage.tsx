@@ -99,7 +99,7 @@ export default function ResumePage() {
     <section className="section-gap">
       <SEO
         title="Resume"
-        description="Experience, education, and technical skills of Yesse Seijnaeve - game and web developer."
+        description="My experience, education, and the tech I work with."
       />
       <div className="page-container max-w-4xl">
         <div className="flex flex-wrap items-end justify-between gap-4">
