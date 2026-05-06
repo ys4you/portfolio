@@ -1,0 +1,7 @@
+services:
+  portfolio:
+    build: .
+    container_name: yesse-portfolio
+    ports:
+      - "80:80"
+    restart: unless-stopped
