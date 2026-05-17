@@ -17,7 +17,7 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || "";
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || "24664c4d-8c11-44c6-9c97-d4dc93bc58ca";
 
 // Email is split to prevent scraping from built JS
 function getEmail() {
@@ -92,7 +92,6 @@ export default function ContactPage() {
         return;
       }
 
-      // Fallback: mailto
       const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
       window.location.href = `mailto:${getEmail()}?subject=${subject}&body=${body}`;
