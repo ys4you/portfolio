@@ -17,20 +17,7 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-// ─── CONFIGURATION ───────────────────────────────────
-// Pick ONE option and fill in the value:
-//
-// Option 1: Web3Forms (easiest, free, no account needed)
-//   1. Go to https://web3forms.com/#start
-//   2. Enter your email, they'll send you an access key
-//   3. Paste it below
-const WEB3FORMS_KEY = "";
-//
-// Option 2: Formspree (free, needs account)
-//   1. Go to https://formspree.io, create a form
-//   2. Paste the full endpoint URL below, e.g. "https://formspree.io/f/xpznqkdl"
-const FORMSPREE_ENDPOINT = "";
-// ─────────────────────────────────────────────────────
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || "";
 
 // Email is split to prevent scraping from built JS
 function getEmail() {
@@ -84,7 +71,6 @@ export default function ContactPage() {
     setError("");
 
     try {
-      // Option 1: Web3Forms
       if (WEB3FORMS_KEY) {
         const res = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
@@ -106,21 +92,6 @@ export default function ContactPage() {
         return;
       }
 
-      // Option 2: Formspree
-      if (FORMSPREE_ENDPOINT) {
-        const res = await fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ name, email, message }),
-        });
-        if (res.ok) {
-          setSubmitted(true);
-          return;
-        }
-        setError("Something went wrong. Please try reaching out via LinkedIn.");
-        return;
-      }
-
       // Fallback: mailto
       const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
@@ -133,7 +104,7 @@ export default function ContactPage() {
     }
   }
 
-  const hasFormService = !!(WEB3FORMS_KEY || FORMSPREE_ENDPOINT);
+  const hasFormService = !!WEB3FORMS_KEY;
 
   return (
     <section className="section-gap">
